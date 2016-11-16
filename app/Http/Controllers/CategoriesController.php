@@ -41,7 +41,7 @@ class CategoriesController extends Controller
      */
     public function create()
     {
-        //
+        return view('categories.form');
     }
 
     /**
@@ -52,7 +52,9 @@ class CategoriesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->category->create($request->all());
+
+        return redirect()->route('categories.index');
     }
 
     /**
