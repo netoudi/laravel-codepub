@@ -30,19 +30,4 @@ class CategoryRequest extends FormRequest
             'name' => 'required|max:255|unique:categories,name,' . $categoryId,
         ];
     }
-
-    public function messages()
-    {
-        return [
-            'required' => 'O campo :attribute é requerido.',
-            'unique' => 'O :attribute digitado já está em uso.',
-        ];
-    }
-
-    public function attributes()
-    {
-        return [
-            'name' => 'nome',
-        ];
-    }
 }

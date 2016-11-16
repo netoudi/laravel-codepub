@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "5a8b850555846ab073c51d660c158c8f",
-    "content-hash": "208628553f35234de36c55acb1bc4ba3",
+    "hash": "09268e2920ebe4b8186d6b7ede6b0894",
+    "content-hash": "2377366e770ff31ebe479904a19e340f",
     "packages": [
         {
             "name": "classpreloader/classpreloader",
@@ -2037,6 +2037,46 @@
                 }
             ],
             "time": "2016-06-13 19:28:20"
+        },
+        {
+            "name": "caouecs/laravel-lang",
+            "version": "3.0.18",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/caouecs/Laravel-lang.git",
+                "reference": "7c5d9ba460165b964408114c2d6e8e32258f3873"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/caouecs/Laravel-lang/zipball/7c5d9ba460165b964408114c2d6e8e32258f3873",
+                "reference": "7c5d9ba460165b964408114c2d6e8e32258f3873",
+                "shasum": ""
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^1.10"
+            },
+            "suggest": {
+                "overtrue/laravel-lang": "Command to add languages in your project"
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "caouecs",
+                    "email": "caouecs@caouecs.net"
+                }
+            ],
+            "description": "Languages for Laravel",
+            "keywords": [
+                "lang",
+                "languages",
+                "laravel",
+                "lpm"
+            ],
+            "time": "2016-10-31 19:34:07"
         },
         {
             "name": "doctrine/annotations",
