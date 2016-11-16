@@ -28,6 +28,8 @@
                                         <td>{{ $category->id }}</td>
                                         <td>{{ $category->name }}</td>
                                         <td nowrap="nowrap">
+                                            <a href="{{ route('categories.show', ['id' => $category->id]) }}"
+                                               class="btn btn-primary btn-xs">Vizualizar</a>
                                             <a href="{{ route('categories.edit', ['id' => $category->id]) }}"
                                                class="btn btn-primary btn-xs">Editar</a>
                                             <a href="{{ route('categories.destroy', ['id' => $category->id]) }}"
