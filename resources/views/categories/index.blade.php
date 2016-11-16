@@ -18,7 +18,7 @@
                                 <thead>
                                 <tr>
                                     <th width="5%">Id</th>
-                                    <th>Name</th>
+                                    <th>Nome</th>
                                     <th width="5%">Ações</th>
                                 </tr>
                                 </thead>
@@ -41,6 +41,9 @@
                                 @endforelse
                                 </tbody>
                             </table>
+                            <div class="text-center">
+                                {{ $categories->links() }}
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -29,7 +29,7 @@ class CategoriesController extends Controller
      */
     public function index()
     {
-        $categories = $this->category->all();
+        $categories = $this->category->query()->paginate(10);
 
         return view('categories.index', compact('categories'));
     }
