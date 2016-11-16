@@ -10,6 +10,14 @@
                     </div>
 
                     <div class="panel-body">
+                        @if($errors->any())
+                            <ul class="alert alert-danger list-inline">
+                                @foreach($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        @endif
+
                         @if(!empty($category))
                             {!! Form::model($category, ['method' => 'PUT', 'route' => ['categories.update', $category->id]]) !!}
                         @else
