@@ -11,7 +11,7 @@
 
                     <div class="panel-body">
                         @if(!empty($category))
-                            {!! Form::model($category, ['method' => 'POST', 'route' => ['categories.update', $category->id]]) !!}
+                            {!! Form::model($category, ['method' => 'PUT', 'route' => ['categories.update', $category->id]]) !!}
                         @else
                             {!! Form::open(['method' => 'POST', 'route' => 'categories.store']) !!}
                         @endif
