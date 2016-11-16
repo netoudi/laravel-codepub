@@ -10,23 +10,16 @@
                     </div>
 
                     <div class="panel-body">
-                        @if($errors->any())
-                            <ul class="alert alert-danger list-inline">
-                                @foreach($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        @endif
-
                         @if(!empty($category))
                             {!! Form::model($category, ['method' => 'PUT', 'route' => ['categories.update', $category->id]]) !!}
                         @else
                             {!! Form::open(['method' => 'POST', 'route' => 'categories.store']) !!}
                         @endif
 
-                        <div class="form-group">
+                        <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                             {!! Form::label('name', 'Nome:', ['class' => 'control-label']) !!}
                             {!! Form::text('name', null, ['class' => 'form-control']) !!}
+                            {!! Form::error('name', $errors) !!}
                         </div>
 
                         <hr>
