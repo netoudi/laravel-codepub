@@ -16,11 +16,11 @@
                             {!! Form::open(['method' => 'POST', 'route' => 'categories.store']) !!}
                         @endif
 
-                        <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                            {!! Form::label('name', 'Nome:', ['class' => 'control-label']) !!}
-                            {!! Form::text('name', null, ['class' => 'form-control']) !!}
-                            {!! Form::error('name', $errors) !!}
-                        </div>
+                        {!! Html::openFormGroup('name', $errors) !!}
+                        {!! Form::label('name', 'Nome:', ['class' => 'control-label']) !!}
+                        {!! Form::text('name', null, ['class' => 'form-control']) !!}
+                        {!! Form::error('name', $errors) !!}
+                        {!! Html::closeFormGroup() !!}
 
                         <hr>
 
