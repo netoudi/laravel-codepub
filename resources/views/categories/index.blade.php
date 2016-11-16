@@ -33,7 +33,20 @@
                                             <a href="{{ route('categories.edit', ['id' => $category->id]) }}"
                                                class="btn btn-primary btn-xs">Editar</a>
                                             <a href="{{ route('categories.destroy', ['id' => $category->id]) }}"
-                                               class="btn btn-danger btn-xs">Deletar</a>
+                                               class="btn btn-danger btn-xs"
+                                               onclick=" event.preventDefault();
+                                                       if (confirm('Deseja realmente deletar o registro?')) {
+                                                       document.getElementById('form-delete-{{ $category->id }}').submit()
+                                                       }
+                                                       ">Deletar</a>
+                                            {!!
+                                                Form::open([
+                                                    'method' => 'DELETE',
+                                                    'route' => ['categories.destroy', $category->id],
+                                                    'id' => 'form-delete-' . $category->id
+                                                ])
+                                            !!}
+                                            {!! Form::close() !!}
                                         </td>
                                     </tr>
                                 @empty
