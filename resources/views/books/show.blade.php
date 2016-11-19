@@ -27,6 +27,10 @@
                                 <dd>{{ $book->subtitle }}</dd>
 
                                 <hr>
+                                <dt><strong>Autor:</strong></dt>
+                                <dd>{{ $book->user->name }}</dd>
+
+                                <hr>
                                 <dt><strong>Preço:</strong></dt>
                                 <dd>{{ $book->price }}</dd>
                             </dl>

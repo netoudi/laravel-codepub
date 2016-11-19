@@ -19,7 +19,7 @@
                                 <tr>
                                     <th width="5%">Id</th>
                                     <th>Título</th>
-                                    <th>Subtítulo</th>
+                                    <th>Autor</th>
                                     <th>Preço</th>
                                     <th width="5%">Ações</th>
                                 </tr>
@@ -29,7 +29,7 @@
                                     <tr>
                                         <td>{{ $book->id }}</td>
                                         <td>{{ str_limit($book->title, 50) }}</td>
-                                        <td>{{ str_limit($book->subtitle, 40) }}</td>
+                                        <td>{{ $book->user->name }}</td>
                                         <td>{{ $book->price }}</td>
                                         <td nowrap="nowrap">
                                             <a href="{{ route('books.show', ['id' => $book->id]) }}"

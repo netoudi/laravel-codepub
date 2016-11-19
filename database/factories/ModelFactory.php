@@ -23,16 +23,15 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
     ];
 });
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
 $factory->define(App\Category::class, function (Faker\Generator $faker) {
     return [
         'name' => ucfirst($faker->unique()->word),
     ];
 });
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
 $factory->define(App\Book::class, function (Faker\Generator $faker) {
     return [
+        'user_id' => $faker->numberBetween(1, 15),
         'title' => $faker->unique()->sentence,
         'subtitle' => $faker->sentence(5, true),
         'price' => $faker->randomFloat(null, 10, 100),
