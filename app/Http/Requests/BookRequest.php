@@ -13,7 +13,7 @@ class BookRequest extends FormRequest
      */
     public function authorize()
     {
-        return $this->route('book')->user_id == $this->user()->id;
+        return $this->route('book') ? $this->route('book')->user_id == $this->user()->id : true;
     }
 
     /**

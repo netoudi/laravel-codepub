@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Book;
 use App\Http\Requests\BookRequest;
+use Illuminate\Support\Facades\Auth;
 
 class BooksController extends Controller
 {
@@ -52,7 +53,9 @@ class BooksController extends Controller
      */
     public function store(BookRequest $request)
     {
-        $this->book->create($request->all());
+        $data = $request->all();
+        $data['user_id'] = Auth::user()->id;
+        $this->book->create($data);
 
         return redirect()->route('books.index');
     }
