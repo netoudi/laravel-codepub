@@ -78,6 +78,13 @@
                 </div>
             </div>
         </nav>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    @include('layouts._alert')
+                </div>
+            </div>
+        </div>
 
         @yield('content')
     </div>

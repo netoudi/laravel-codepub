@@ -57,7 +57,7 @@ class BooksController extends Controller
         $data['user_id'] = Auth::user()->id;
         $this->book->create($data);
 
-        return redirect()->route('books.index');
+        return redirect()->route('books.index')->with('success', 'Livro cadastrado com sucesso.');
     }
 
     /**
@@ -93,7 +93,7 @@ class BooksController extends Controller
     {
         $book->fill($request->all())->save();
 
-        return redirect()->route('books.index');
+        return redirect()->route('books.index')->with('success', 'Livro alterado com sucesso.');
     }
 
     /**
@@ -106,6 +106,6 @@ class BooksController extends Controller
     {
         $book->delete();
 
-        return redirect()->route('books.index');
+        return redirect()->route('books.index')->with('success', 'Livro excluído com sucesso');
     }
 }

@@ -54,7 +54,7 @@ class CategoriesController extends Controller
     {
         $this->category->create($request->all());
 
-        return redirect()->route('categories.index');
+        return redirect()->route('categories.index')->with('success', 'Categoria cadastrada com sucesso.');
     }
 
     /**
@@ -90,7 +90,7 @@ class CategoriesController extends Controller
     {
         $category->fill($request->all())->save();
 
-        return redirect()->route('categories.index');
+        return redirect()->route('categories.index')->with('success', 'Categoria alterada com sucesso.');
     }
 
     /**
@@ -103,6 +103,6 @@ class CategoriesController extends Controller
     {
         $category->delete();
 
-        return redirect()->route('categories.index');
+        return redirect()->route('categories.index')->with('success', 'Categoria excluída com sucesso');
     }
 }
