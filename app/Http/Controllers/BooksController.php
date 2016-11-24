@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Book;
 use App\Http\Requests\BookRequest;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class BooksController extends Controller
@@ -57,7 +58,7 @@ class BooksController extends Controller
         $data['user_id'] = Auth::user()->id;
         $this->book->create($data);
 
-        return redirect()->route('books.index')->with('success', 'Livro cadastrado com sucesso.');
+        return redirect()->to($request->get('_previous'))->with('success', 'Livro cadastrado com sucesso.');
     }
 
     /**
@@ -93,19 +94,20 @@ class BooksController extends Controller
     {
         $book->fill($request->all())->save();
 
-        return redirect()->route('books.index')->with('success', 'Livro alterado com sucesso.');
+        return redirect()->to($request->get('_previous'))->with('success', 'Livro alterado com sucesso.');
     }
 
     /**
      * Remove the specified resource from storage.
      *
+     * @param Request $request
      * @param Book $book
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Book $book)
+    public function destroy(Request $request, Book $book)
     {
         $book->delete();
 
-        return redirect()->route('books.index')->with('success', 'Livro excluído com sucesso');
+        return redirect()->to($request->get('_previous'))->with('success', 'Livro excluído com sucesso');
     }
 }

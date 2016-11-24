@@ -17,6 +17,9 @@
     <script>
         window.Laravel = <?php echo json_encode([
             'csrfToken' => csrf_token(),
+            'urlFull' => URL::full(),
+            'urlCurrent' => URL::current(),
+            'urlPrevious' => URL::previous(),
         ]); ?>
     </script>
 </head>
@@ -59,6 +62,12 @@
             input.type = 'hidden';
             input.name = '_method';
             input.value = 'DELETE';
+            form.appendChild(input);
+
+            input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = '_previous';
+            input.value = Laravel.urlFull;
             form.appendChild(input);
 
             form.setAttribute('method', 'POST');

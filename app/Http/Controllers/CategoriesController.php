@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use App\Http\Requests\CategoryRequest;
+use Illuminate\Http\Request;
 
 class CategoriesController extends Controller
 {
@@ -54,7 +55,7 @@ class CategoriesController extends Controller
     {
         $this->category->create($request->all());
 
-        return redirect()->route('categories.index')->with('success', 'Categoria cadastrada com sucesso.');
+        return redirect()->to($request->get('_previous'))->with('success', 'Categoria cadastrada com sucesso.');
     }
 
     /**
@@ -90,19 +91,20 @@ class CategoriesController extends Controller
     {
         $category->fill($request->all())->save();
 
-        return redirect()->route('categories.index')->with('success', 'Categoria alterada com sucesso.');
+        return redirect()->to($request->get('_previous'))->with('success', 'Categoria alterada com sucesso.');
     }
 
     /**
      * Remove the specified resource from storage.
      *
+     * @param Request $request
      * @param Category $category
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $category)
+    public function destroy(Request $request, Category $category)
     {
         $category->delete();
 
-        return redirect()->route('categories.index')->with('success', 'Categoria excluída com sucesso');
+        return redirect()->to($request->get('_previous'))->with('success', 'Categoria excluída com sucesso');
     }
 }

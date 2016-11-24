@@ -16,6 +16,8 @@
                             {!! Form::open(['method' => 'POST', 'route' => 'categories.store']) !!}
                         @endif
 
+                        {!! Form::hidden('_previous', URL::previous()) !!}
+
                         {!! Html::openFormGroup('name', $errors) !!}
                         {!! Form::label('name', 'Nome:', ['class' => 'control-label']) !!}
                         {!! Form::text('name', null, ['class' => 'form-control']) !!}
@@ -26,7 +28,7 @@
 
                         <div class="form-group text-right">
                             {!! Form::submit('Enviar', ['class'=>'btn btn-primary btn-sm']) !!}
-                            <a class="btn btn-warning btn-sm" href="{{ route('categories.index') }}"
+                            <a class="btn btn-warning btn-sm" href="{{ URL::previous() }}"
                                role="button">Cancelar</a>
                         </div>
 

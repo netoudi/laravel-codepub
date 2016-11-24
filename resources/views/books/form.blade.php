@@ -16,6 +16,8 @@
                             {!! Form::open(['method' => 'POST', 'route' => 'books.store']) !!}
                         @endif
 
+                        {!! Form::hidden('_previous', URL::previous()) !!}
+
                         {!! Html::openFormGroup('title', $errors) !!}
                         {!! Form::label('title', 'Título:', ['class' => 'control-label']) !!}
                         {!! Form::text('title', null, ['class' => 'form-control']) !!}
@@ -38,7 +40,7 @@
 
                         <div class="form-group text-right">
                             {!! Form::submit('Enviar', ['class'=>'btn btn-primary btn-sm']) !!}
-                            <a class="btn btn-warning btn-sm" href="{{ route('books.index') }}"
+                            <a class="btn btn-warning btn-sm" href="{{ URL::previous() }}"
                                role="button">Cancelar</a>
                         </div>
 

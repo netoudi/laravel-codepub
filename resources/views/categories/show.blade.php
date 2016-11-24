@@ -7,7 +7,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         Categoria
-                        <a href="{{ route('categories.index') }}" class="btn btn-primary btn-xs pull-right">
+                        <a href="{{ URL::previous() }}" class="btn btn-primary btn-xs pull-right">
                             &laquo; Voltar
                         </a>
                     </div>
