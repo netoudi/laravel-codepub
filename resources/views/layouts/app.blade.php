@@ -33,5 +33,40 @@
 
     <!-- Scripts -->
     <script src="/js/app.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.js-destroy').on('click', function (event) {
+                event.preventDefault();
+
+                if (confirm('Deseja realmente deletar o registro?')) {
+                    destroy($(this).attr('href'));
+                }
+            });
+        });
+
+        function destroy(href) {
+            var form, input;
+
+            form = document.createElement('form');
+
+            input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = '_token';
+            input.value = Laravel.csrfToken;
+            form.appendChild(input);
+
+            input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = '_method';
+            input.value = 'DELETE';
+            form.appendChild(input);
+
+            form.setAttribute('method', 'POST');
+
+            form.setAttribute('action', href);
+
+            $(form).submit();
+        }
+    </script>
 </body>
 </html>

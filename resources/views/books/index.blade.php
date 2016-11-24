@@ -37,20 +37,7 @@
                                             <a href="{{ route('books.edit', ['id' => $book->id]) }}"
                                                class="btn btn-primary btn-xs">Editar</a>
                                             <a href="{{ route('books.destroy', ['id' => $book->id]) }}"
-                                               class="btn btn-danger btn-xs"
-                                               onclick=" event.preventDefault();
-                                                       if (confirm('Deseja realmente deletar o registro?')) {
-                                                       document.getElementById('form-delete-{{ $book->id }}').submit()
-                                                       }
-                                                       ">Deletar</a>
-                                            {!!
-                                                Form::open([
-                                                    'method' => 'DELETE',
-                                                    'route' => ['books.destroy', $book->id],
-                                                    'id' => 'form-delete-' . $book->id
-                                                ])
-                                            !!}
-                                            {!! Form::close() !!}
+                                               class="btn btn-danger btn-xs js-destroy">Deletar</a>
                                         </td>
                                     </tr>
                                 @empty
