@@ -178,6 +178,7 @@ return [
         // CodePub\Providers\BroadcastServiceProvider::class,
         CodePub\Providers\EventServiceProvider::class,
         CodePub\Providers\RouteServiceProvider::class,
+        CodePub\Providers\RepositoryServiceProvider::class,
 
     ],
 

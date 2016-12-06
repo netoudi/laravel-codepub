@@ -4,24 +4,25 @@ namespace CodePub\Http\Controllers;
 
 use CodePub\Http\Requests\BookRequest;
 use CodePub\Models\Book;
+use CodePub\Repositories\BookRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class BooksController extends Controller
 {
     /**
-     * @var Book
+     * @var BookRepository
      */
-    private $book;
+    private $bookRepository;
 
     /**
      * BooksController constructor.
      *
-     * @param \CodePub\Models\Book $book
+     * @param BookRepository $bookRepository
      */
-    public function __construct(Book $book)
+    public function __construct(BookRepository $bookRepository)
     {
-        $this->book = $book;
+        $this->bookRepository = $bookRepository;
     }
 
     /**
@@ -31,7 +32,7 @@ class BooksController extends Controller
      */
     public function index()
     {
-        $books = $this->book->query()->paginate(10);
+        $books = $this->bookRepository->paginate(10);
 
         return view('books.index', compact('books'));
     }
@@ -56,7 +57,7 @@ class BooksController extends Controller
     {
         $data = $request->all();
         $data['user_id'] = Auth::user()->id;
-        $this->book->create($data);
+        $this->bookRepository->create($data);
 
         return redirect()->to($request->get('_previous'))->with('success', 'Livro cadastrado com sucesso.');
     }

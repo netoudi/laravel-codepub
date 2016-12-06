@@ -4,23 +4,24 @@ namespace CodePub\Http\Controllers;
 
 use CodePub\Http\Requests\CategoryRequest;
 use CodePub\Models\Category;
+use CodePub\Repositories\CategoryRepository;
 use Illuminate\Http\Request;
 
 class CategoriesController extends Controller
 {
     /**
-     * @var Category
+     * @var CategoryRepository
      */
-    private $category;
+    private $categoryRepository;
 
     /**
      * CategoriesController constructor.
      *
-     * @param \CodePub\Models\Category $category
+     * @param CategoryRepository $categoryRepository
      */
-    public function __construct(Category $category)
+    public function __construct(CategoryRepository $categoryRepository)
     {
-        $this->category = $category;
+        $this->categoryRepository = $categoryRepository;
     }
 
     /**
@@ -30,7 +31,7 @@ class CategoriesController extends Controller
      */
     public function index()
     {
-        $categories = $this->category->query()->paginate(10);
+        $categories = $this->categoryRepository->paginate(10);
 
         return view('categories.index', compact('categories'));
     }
@@ -53,7 +54,7 @@ class CategoriesController extends Controller
      */
     public function store(CategoryRequest $request)
     {
-        $this->category->create($request->all());
+        $this->categoryRepository->create($request->all());
 
         return redirect()->to($request->get('_previous'))->with('success', 'Categoria cadastrada com sucesso.');
     }
