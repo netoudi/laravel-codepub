@@ -2,8 +2,8 @@
 
 namespace CodePub\Http\Controllers;
 
-use CodePub\Category;
 use CodePub\Http\Requests\CategoryRequest;
+use CodePub\Models\Category;
 use Illuminate\Http\Request;
 
 class CategoriesController extends Controller
@@ -16,7 +16,7 @@ class CategoriesController extends Controller
     /**
      * CategoriesController constructor.
      *
-     * @param Category $category
+     * @param \CodePub\Models\Category $category
      */
     public function __construct(Category $category)
     {
@@ -72,7 +72,7 @@ class CategoriesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param Category $category
+     * @param \CodePub\Models\Category $category
      * @return \Illuminate\Http\Response
      */
     public function edit(Category $category)
@@ -98,7 +98,7 @@ class CategoriesController extends Controller
      * Remove the specified resource from storage.
      *
      * @param Request $request
-     * @param Category $category
+     * @param \CodePub\Models\Category $category
      * @return \Illuminate\Http\Response
      */
     public function destroy(Request $request, Category $category)

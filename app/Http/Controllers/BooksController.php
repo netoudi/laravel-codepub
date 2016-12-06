@@ -2,8 +2,8 @@
 
 namespace CodePub\Http\Controllers;
 
-use CodePub\Book;
 use CodePub\Http\Requests\BookRequest;
+use CodePub\Models\Book;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -17,7 +17,7 @@ class BooksController extends Controller
     /**
      * BooksController constructor.
      *
-     * @param Book $book
+     * @param \CodePub\Models\Book $book
      */
     public function __construct(Book $book)
     {
@@ -64,7 +64,7 @@ class BooksController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param Book $book
+     * @param \CodePub\Models\Book $book
      * @return \Illuminate\Http\Response
      */
     public function show(Book $book)
@@ -87,7 +87,7 @@ class BooksController extends Controller
      * Update the specified resource in storage.
      *
      * @param BookRequest $request
-     * @param Book $book
+     * @param \CodePub\Models\Book $book
      * @return \Illuminate\Http\Response
      */
     public function update(BookRequest $request, Book $book)
@@ -101,7 +101,7 @@ class BooksController extends Controller
      * Remove the specified resource from storage.
      *
      * @param Request $request
-     * @param Book $book
+     * @param \CodePub\Models\Book $book
      * @return \Illuminate\Http\Response
      */
     public function destroy(Request $request, Book $book)
