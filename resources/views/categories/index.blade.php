@@ -13,6 +13,21 @@
                     </div>
 
                     <div class="panel-body">
+                        {!! Form::model(compact('search'), ['method' => 'GET', 'route' => 'categories.index', 'class' => 'form-inline text-right']) !!}
+                        <div class="form-group">
+                            <div class="input-group">
+                                {!! Form::text('search', null, ['class' => 'form-control input-sm', 'placeholder' => 'O que você deseja buscar?']) !!}
+                                <div class="input-group-btn">
+                                    {!! Form::submit('Buscar', ['class'=>'btn btn-primary btn-sm']) !!}
+                                </div>
+                            </div>
+                        </div>
+                        {!! Form::close() !!}
+
+                        @if(!empty($search))
+                            <h4>Resultado da busca: {{ $search }}</h4>
+                        @endif
+
                         <div class="table-responsive">
                             <table class="table table-hover">
                                 <thead>

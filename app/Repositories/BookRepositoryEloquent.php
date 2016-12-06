@@ -14,6 +14,11 @@ use Prettus\Repository\Eloquent\BaseRepository;
  */
 class BookRepositoryEloquent extends BaseRepository implements BookRepository
 {
+    protected $fieldSearchable = [
+        'title' => 'like',
+        'user.name' => 'like',
+    ];
+
     /**
      * Specify Model class name
      *
