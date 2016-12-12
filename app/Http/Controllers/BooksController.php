@@ -5,6 +5,7 @@ namespace CodePub\Http\Controllers;
 use CodePub\Http\Requests\BookRequest;
 use CodePub\Models\Book;
 use CodePub\Repositories\BookRepository;
+use CodePub\Repositories\CategoryRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -16,13 +17,20 @@ class BooksController extends Controller
     private $bookRepository;
 
     /**
+     * @var CategoryRepository
+     */
+    private $categoryRepository;
+
+    /**
      * BooksController constructor.
      *
      * @param BookRepository $bookRepository
+     * @param CategoryRepository $categoryRepository
      */
-    public function __construct(BookRepository $bookRepository)
+    public function __construct(BookRepository $bookRepository, CategoryRepository $categoryRepository)
     {
         $this->bookRepository = $bookRepository;
+        $this->categoryRepository = $categoryRepository;
     }
 
     /**
@@ -46,7 +54,9 @@ class BooksController extends Controller
      */
     public function create()
     {
-        return view('books.form');
+        $categories = $this->categoryRepository->lists('name', 'id');
+
+        return view('books.form', compact('categories'));
     }
 
     /**
@@ -83,7 +93,9 @@ class BooksController extends Controller
      */
     public function edit(Book $book)
     {
-        return view('books.form', compact('book'));
+        $categories = $this->categoryRepository->lists('name', 'id');
+
+        return view('books.form', compact('book', 'categories'));
     }
 
     /**
@@ -95,7 +107,8 @@ class BooksController extends Controller
      */
     public function update(BookRequest $request, Book $book)
     {
-        $book->fill($request->all())->save();
+        //        $book->fill($request->all())->save();
+        $this->bookRepository->update($request->all(), $book->id);
 
         return redirect()->to($request->get('_previous'))->with('success', 'Livro alterado com sucesso.');
     }

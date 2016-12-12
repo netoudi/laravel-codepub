@@ -15,9 +15,9 @@ class CreateBookCategoryTable extends Migration
     {
         Schema::create('book_category', function (Blueprint $table) {
             $table->integer('book_id')->unsigned();
-            $table->foreign('book_id')->references('id')->on('books');
+            $table->foreign('book_id')->references('id')->on('books')->onDelete('cascade');
             $table->integer('category_id')->unsigned();
-            $table->foreign('category_id')->references('id')->on('categories');
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
         });
     }
 

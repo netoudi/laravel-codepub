@@ -14,7 +14,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         \Form::macro('error', function ($field, $errors) {
-            if ($errors->has($field)) {
+            if (!str_contains($field, '.*') && $errors->has($field) || count($errors->get($field)) > 0) {
                 return view('errors.error_field', compact('field'));
             }
 
@@ -22,9 +22,22 @@ class AppServiceProvider extends ServiceProvider
         });
 
         \Html::macro('openFormGroup', function ($field = null, $errors = null) {
-            $hasError = ($field != null && $errors != null && $errors->has($field)) ? ' has-error' : '';
+            $result = false;
 
-            return "<div class=\"form-group{$hasError}\">";
+            if ($field != null && $errors != null) {
+                if (is_array($field)) {
+                    foreach ($field as $value) {
+                        if (!str_contains($value, '.*') && $errors->has($value) || count($errors->get($value)) > 0) {
+                            $result = true;
+                            break;
+                        }
+                    }
+                } elseif (!str_contains($field, '.*') && $errors->has($field) || count($errors->get($field)) > 0) {
+                    $result = true;
+                }
+            }
+
+            return sprintf("<div class=\"%s\">", ($result ? 'form-group has-error' : 'form-group'));
         });
 
         \Html::macro('closeFormGroup', function () {

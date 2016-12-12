@@ -33,6 +33,16 @@
                                 <hr>
                                 <dt><strong>Preço:</strong></dt>
                                 <dd>{{ $book->price }}</dd>
+
+                                <hr>
+                                <dt><strong>Categorias:</strong></dt>
+                                <dd>
+                                    <ul class="list-inline">
+                                        @foreach($book->categories as $category)
+                                            <li>{{ $category->name }};</li>
+                                        @endforeach
+                                    </ul>
+                                </dd>
                             </dl>
                         </div>
                     </div>

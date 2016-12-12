@@ -115,6 +115,7 @@ return [
     'attributes'           => [
         'name' => 'nome',
         'price' => 'preço',
+        'categories_*' => 'categoria :num',
     ],
 
 ];
