@@ -2,8 +2,9 @@
 
 namespace CodePub\Repositories;
 
+use CodePub\Criteria\CriteriaTrashedTrait;
 use CodePub\Models\Category;
-use CodePub\Validators\CategoryValidator;
+use Illuminate\Support\Collection;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Prettus\Repository\Eloquent\BaseRepository;
 
@@ -14,7 +15,7 @@ use Prettus\Repository\Eloquent\BaseRepository;
  */
 class CategoryRepositoryEloquent extends BaseRepository implements CategoryRepository
 {
-    use BaseRepositoryTrait;
+    use BaseRepositoryTrait, CriteriaTrashedTrait, RepositoryRestoreTrait;
 
     protected $fieldSearchable = [
         'name' => 'like',
@@ -36,5 +37,18 @@ class CategoryRepositoryEloquent extends BaseRepository implements CategoryRepos
     public function boot()
     {
         $this->pushCriteria(app(RequestCriteria::class));
+    }
+
+    /**
+     * @param $column
+     * @param null $key
+     * @return static
+     */
+    public function listsWithMutators($column, $key = null)
+    {
+        /** @var Collection $collection */
+        $collection = $this->all();
+
+        return $collection->pluck($column, $key);
     }
 }

@@ -2,6 +2,8 @@
 
 namespace CodePub\Repositories;
 
+use CodePub\Criteria\CriteriaTrashedInterface;
+use Prettus\Repository\Contracts\RepositoryCriteriaInterface;
 use Prettus\Repository\Contracts\RepositoryInterface;
 
 /**
@@ -9,7 +11,7 @@ use Prettus\Repository\Contracts\RepositoryInterface;
  *
  * @package namespace CodePub\Repositories;
  */
-interface BookRepository extends RepositoryInterface
+interface BookRepository extends RepositoryInterface, RepositoryCriteriaInterface, CriteriaTrashedInterface, RepositoryRestoreInterface
 {
     //
 }

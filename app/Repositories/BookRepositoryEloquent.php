@@ -2,8 +2,8 @@
 
 namespace CodePub\Repositories;
 
+use CodePub\Criteria\CriteriaTrashedTrait;
 use CodePub\Models\Book;
-use CodePub\Validators\BookValidator;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Prettus\Repository\Eloquent\BaseRepository;
 
@@ -14,11 +14,12 @@ use Prettus\Repository\Eloquent\BaseRepository;
  */
 class BookRepositoryEloquent extends BaseRepository implements BookRepository
 {
-    use BaseRepositoryTrait;
+    use BaseRepositoryTrait, CriteriaTrashedTrait, RepositoryRestoreTrait;
 
     protected $fieldSearchable = [
         'title' => 'like',
         'user.name' => 'like',
+        'categories.name' => 'like',
     ];
 
     public function create(array $attributes)

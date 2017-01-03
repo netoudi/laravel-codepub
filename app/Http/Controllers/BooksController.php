@@ -93,7 +93,8 @@ class BooksController extends Controller
      */
     public function edit(Book $book)
     {
-        $categories = $this->categoryRepository->lists('name', 'id');
+        $this->categoryRepository->withTrashed();
+        $categories = $this->categoryRepository->listsWithMutators('name_trashed', 'id');
 
         return view('books.form', compact('book', 'categories'));
     }

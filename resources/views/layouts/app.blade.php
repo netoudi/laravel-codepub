@@ -45,6 +45,24 @@
                     destroy($(this).attr('href'));
                 }
             });
+
+            $('.js-destroy-trashed').on('click', function (event) {
+                event.preventDefault();
+
+                if (confirm('Deseja realmente deletar o registro?')) {
+                    if (confirm('Não será mais possivel restaurar o registro.\nDeseja continuar exclução?')) {
+                        destroy($(this).attr('href'));
+                    }
+                }
+            });
+
+            $('.js-restore').on('click', function (event) {
+                event.preventDefault();
+
+                if (confirm('Deseja realmente restaurar o registro?')) {
+                    restore($(this).attr('href'));
+                }
+            });
         });
 
         function destroy(href) {
@@ -75,6 +93,38 @@
             form.setAttribute('action', href);
 
             $(form).submit();
+        }
+
+        function restore(href) {
+            var form, input;
+
+            form = document.createElement('form');
+
+            input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = '_token';
+            input.value = Laravel.csrfToken;
+            form.appendChild(input);
+
+            input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = '_method';
+            input.value = 'PUT';
+            form.appendChild(input);
+
+            input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = '_previous';
+            input.value = Laravel.urlFull;
+            form.appendChild(input);
+
+            form.setAttribute('method', 'POST');
+
+            form.setAttribute('action', href);
+
+            $(form).submit()
+
+            console.log(form);
         }
     </script>
 </body>

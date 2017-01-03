@@ -4,10 +4,15 @@ namespace CodePub\Models;
 
 use Collective\Html\Eloquent\FormAccessible;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Book extends Model
 {
-    use FormAccessible;
+    use FormAccessible, SoftDeletes;
+
+    protected $dates = [
+        'deleted_at',
+    ];
 
     protected $fillable = [
         'user_id',
@@ -28,6 +33,6 @@ class Book extends Model
 
     public function categories()
     {
-        return $this->belongsToMany(Category::class);
+        return $this->belongsToMany(Category::class)->withTrashed();
     }
 }

@@ -6,7 +6,7 @@
             <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        Livro
+                        Livro na lixeira
                         <a href="{{ URL::previous() }}" class="btn btn-primary btn-xs pull-right">
                             &laquo; Voltar
                         </a>
