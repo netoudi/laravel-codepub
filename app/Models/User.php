@@ -4,6 +4,7 @@ namespace CodePub\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Modules\CodeBook\Models\Book;
 
 class User extends Authenticatable
 {

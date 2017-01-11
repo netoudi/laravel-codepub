@@ -101,7 +101,7 @@ return [
             'migration' => 'database/migrations',
             'model' => 'Models',
             'repository' => 'Repositories',
-            'seeder' => 'database/seeders',
+            'seeder' => 'database/seeds',
             'controller' => 'Http/Controllers',
             'filter' => 'Http/Middleware',
             'request' => 'Http/Requests',

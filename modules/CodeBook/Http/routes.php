@@ -1,6 +1,11 @@
 <?php
 
-Route::group(['middleware' => 'web', 'prefix' => 'codebook', 'namespace' => 'Modules\CodeBook\Http\Controllers'], function()
-{
-    Route::get('/', 'CodeBookController@index');
+Route::resource('categories', 'CategoriesController');
+
+Route::resource('books', 'BooksController');
+
+Route::group(['prefix' => 'trashed', 'as' => 'trashed.'], function () {
+    Route::resource('books', 'BooksTrashedController',
+        ['except' => ['store', 'create', 'edit']]
+    );
 });

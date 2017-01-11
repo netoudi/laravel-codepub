@@ -23,6 +23,9 @@ class CodeBookServiceProvider extends ServiceProvider
         $this->registerTranslations();
         $this->registerConfig();
         $this->registerViews();
+        $this->registerMigrations();
+        $this->registerSeeds();
+        $this->registerFactories();
     }
 
     /**
@@ -32,7 +35,8 @@ class CodeBookServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->register(RouteServiceProvider::class);
+        $this->app->register(RepositoryServiceProvider::class);
     }
 
     /**
@@ -43,10 +47,11 @@ class CodeBookServiceProvider extends ServiceProvider
     protected function registerConfig()
     {
         $this->publishes([
-            __DIR__.'/../config/config.php' => config_path('codebook.php'),
+            __DIR__ . '/../config/config.php' => config_path('codebook.php'),
         ], 'config');
+
         $this->mergeConfigFrom(
-            __DIR__.'/../config/config.php', 'codebook'
+            __DIR__ . '/../config/config.php', 'codebook'
         );
     }
 
@@ -59,10 +64,10 @@ class CodeBookServiceProvider extends ServiceProvider
     {
         $viewPath = base_path('resources/views/modules/codebook');
 
-        $sourcePath = __DIR__.'/../resources/views';
+        $sourcePath = __DIR__ . '/../resources/views';
 
         $this->publishes([
-            $sourcePath => $viewPath
+            $sourcePath => $viewPath,
         ]);
 
         $this->loadViewsFrom(array_merge(array_map(function ($path) {
@@ -82,8 +87,44 @@ class CodeBookServiceProvider extends ServiceProvider
         if (is_dir($langPath)) {
             $this->loadTranslationsFrom($langPath, 'codebook');
         } else {
-            $this->loadTranslationsFrom(__DIR__ .'/../resources/lang', 'codebook');
+            $this->loadTranslationsFrom(__DIR__ . '/../resources/lang', 'codebook');
         }
+    }
+
+    /**
+     * Register migrations.
+     *
+     * @return void
+     */
+    public function registerMigrations()
+    {
+        $this->publishes([
+            __DIR__ . '/../database/migrations' => database_path('migrations'),
+        ], 'migrations');
+    }
+
+    /**
+     * Register seeders.
+     *
+     * @return void
+     */
+    public function registerSeeds()
+    {
+        $this->publishes([
+            __DIR__ . '/../database/seeds' => database_path('seeds'),
+        ], 'seeds');
+    }
+
+    /**
+     * Register factories.
+     *
+     * @return void
+     */
+    public function registerFactories()
+    {
+        $this->publishes([
+            __DIR__ . '/../database/factories' => database_path('factories'),
+        ], 'factories');
     }
 
     /**
