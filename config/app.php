@@ -172,6 +172,11 @@ return [
         Nwidart\Modules\LaravelModulesServiceProvider::class,
 
         /*
+         * Modules Service Providers...
+         */
+        Modules\CodeBook\Providers\CodeBookServiceProvider::class,
+
+        /*
          * Application Service Providers...
          */
         CodePub\Providers\AppServiceProvider::class,

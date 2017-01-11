@@ -62,7 +62,7 @@ return [
         |
         */
 
-        'modules' => base_path('Modules'),
+        'modules' => base_path('modules'),
         /*
         |--------------------------------------------------------------------------
         | Modules assets path
@@ -94,25 +94,25 @@ return [
         */
 
         'generator' => [
-            'assets' => 'Assets',
-            'config' => 'Config',
-            'command' => 'Console',
-            'event' => 'Events',
-            'listener' => 'Events/Handlers',
-            'migration' => 'Database/Migrations',
-            'model' => 'Entities',
+            'config' => 'config',
+//            'command' => 'Console',
+//            'event' => 'Events',
+//            'listener' => 'Events/Handlers',
+            'migration' => 'database/migrations',
+            'model' => 'Models',
             'repository' => 'Repositories',
-            'seeder' => 'Database/Seeders',
+            'seeder' => 'database/seeders',
             'controller' => 'Http/Controllers',
             'filter' => 'Http/Middleware',
             'request' => 'Http/Requests',
             'provider' => 'Providers',
-            'lang' => 'Resources/lang',
-            'views' => 'Resources/views',
-            'test' => 'Tests',
-            'jobs' => 'Jobs',
-            'emails' => 'Emails',
-            'notifications' => 'Notifications',
+            'assets' => 'resources/assets',
+            'lang' => 'resources/lang',
+            'views' => 'resources/views',
+            'test' => 'tests',
+//            'jobs' => 'Jobs',
+//            'emails' => 'Emails',
+//            'notifications' => 'Notifications',
         ],
     ],
     /*

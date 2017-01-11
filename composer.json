@@ -37,7 +37,7 @@
         ],
         "psr-4": {
             "CodePub\\": "app/",
-            "Modules\\": "Modules/"
+            "Modules\\": "modules/"
         }
     },
     "autoload-dev": {
