@@ -1,0 +1,15 @@
+{
+    "name": "CodeUser",
+    "alias": "codeuser",
+    "description": "",
+    "keywords": [],
+    "active": 1,
+    "order": 0,
+    "providers": [
+        "Modules\\CodeUser\\Providers\\CodeUserServiceProvider"
+    ],
+    "aliases":{},
+    "files": [
+        "start.php"
+    ]
+}
