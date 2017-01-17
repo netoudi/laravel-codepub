@@ -2,7 +2,6 @@
 
 namespace Modules\CodeBook\Models;
 
-use CodePub\Models\User;
 use Collective\Html\Eloquent\FormAccessible;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -29,7 +28,7 @@ class Book extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(\Modules\CodeUser\Models\User::class);
     }
 
     public function categories()

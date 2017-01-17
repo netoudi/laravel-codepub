@@ -1,6 +1,6 @@
 <?php
 
-namespace CodePub\Models;
+namespace Modules\CodeUser\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;

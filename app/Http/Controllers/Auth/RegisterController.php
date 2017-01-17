@@ -3,9 +3,9 @@
 namespace CodePub\Http\Controllers\Auth;
 
 use CodePub\Http\Controllers\Controller;
-use CodePub\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Validator;
+use Modules\CodeUser\Models\User;
 
 class RegisterController extends Controller
 {
@@ -58,7 +58,7 @@ class RegisterController extends Controller
      * Create a new user instance after a valid registration.
      *
      * @param  array  $data
-     * @return \CodePub\Models\User
+     * @return \Modules\CodeUser\Models\User
      */
     protected function create(array $data)
     {

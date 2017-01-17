@@ -23,6 +23,9 @@ class CodeUserServiceProvider extends ServiceProvider
         $this->registerTranslations();
         $this->registerConfig();
         $this->registerViews();
+        $this->registerMigrations();
+        $this->registerSeeds();
+        $this->registerFactories();
     }
 
     /**
@@ -51,6 +54,7 @@ class CodeUserServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__ . '/../config/config.php' => config_path('codeuser.php'),
         ], 'config');
+
         $this->mergeConfigFrom(
             __DIR__ . '/../config/config.php', 'codeuser'
         );
@@ -77,13 +81,50 @@ class CodeUserServiceProvider extends ServiceProvider
     }
 
     /**
+     * Register migrations.
+     *
+     * @return void
+     */
+    public function registerMigrations()
+    {
+        $this->publishes([
+            __DIR__ . '/../database/migrations' => database_path('migrations'),
+        ], 'migrations');
+    }
+
+    /**
+     * Register seeders.
+     *
+     * @return void
+     */
+    public function registerSeeds()
+    {
+        $this->publishes([
+            __DIR__ . '/../database/seeds' => database_path('seeds'),
+        ], 'seeds');
+    }
+
+    /**
+     * Register factories.
+     *
+     * @return void
+     */
+    public function registerFactories()
+    {
+        $this->publishes([
+            __DIR__ . '/../database/factories' => database_path('factories'),
+        ], 'factories');
+    }
+
+    /**
      * Register the service provider.
      *
      * @return void
      */
     public function register()
     {
-        //
+        $this->app->register(RouteServiceProvider::class);
+        $this->app->register(RepositoryServiceProvider::class);
     }
 
     /**
