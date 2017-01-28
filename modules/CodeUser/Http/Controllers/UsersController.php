@@ -103,11 +103,11 @@ class UsersController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param Request $request
+     * @param UserRequest $request
      * @param \Modules\CodeUser\Models\User $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, User $user)
+    public function destroy(UserRequest $request, User $user)
     {
         $user->delete();
 
