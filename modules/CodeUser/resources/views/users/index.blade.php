@@ -50,7 +50,7 @@
                                             <a href="{{ route('users.edit', ['id' => $user->id]) }}"
                                                class="btn btn-primary btn-xs">Editar</a>
                                             @if(Auth::user()->id == $user->id)
-                                                <a href="#" class="btn btn-danger btn-xs disabled">Deletar</a>
+                                                <a class="btn btn-danger btn-xs" title="Não é possível excluir o próprio usuário" data-toggle="tooltip" data-placement="top" disabled="disabled">Deletar</a>
                                             @else
                                                 <a href="{{ route('users.destroy', ['id' => $user->id]) }}"
                                                    class="btn btn-danger btn-xs js-destroy">Deletar</a>

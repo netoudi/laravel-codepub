@@ -44,6 +44,8 @@
     <script src="/js/app.js"></script>
     <script>
         $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+
             $('.js-destroy').on('click', function (event) {
                 event.preventDefault();
 

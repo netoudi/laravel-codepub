@@ -48,8 +48,8 @@
                                             <a href="{{ route('roles.show', ['id' => $role->id]) }}"
                                                class="btn btn-primary btn-xs">Vizualizar</a>
                                             @if($role->name == config('codeuser.acl.role_admin'))
-                                                <a href="#" class="btn btn-danger btn-xs disabled" title="Não é possível editar o papel padrão">Editar</a>
-                                                <a href="#" class="btn btn-danger btn-xs disabled" title="Não é possível deletar o papel padrão">Deletar</a>
+                                                <a class="btn btn-danger btn-xs" title="Não é possível editar o papel padrão" data-toggle="tooltip" data-placement="top" disabled="disabled">Editar</a>
+                                                <a class="btn btn-danger btn-xs" title="Não é possível deletar o papel padrão" data-toggle="tooltip" data-placement="top" disabled="disabled">Deletar</a>
                                             @else
                                                 <a href="{{ route('roles.edit', ['id' => $role->id]) }}"
                                                    class="btn btn-primary btn-xs">Editar</a>
