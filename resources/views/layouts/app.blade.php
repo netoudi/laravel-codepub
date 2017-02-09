@@ -34,6 +34,12 @@
         @yield('content')
     </div>
 
+    <form id="form-ajax" style="display: none;">
+        <input type="hidden" name="_token">
+        <input type="hidden" name="_method">
+        <input type="hidden" name="_previous">
+    </form>
+
     <!-- Scripts -->
     <script src="/js/app.js"></script>
     <script>
@@ -42,7 +48,7 @@
                 event.preventDefault();
 
                 if (confirm('Deseja realmente deletar o registro?')) {
-                    destroy($(this).attr('href'));
+                    formAjax('DELETE', $(this).attr('href'));
                 }
             });
 
@@ -51,7 +57,7 @@
 
                 if (confirm('Deseja realmente deletar o registro?')) {
                     if (confirm('Não será mais possivel restaurar o registro.\nDeseja continuar exclução?')) {
-                        destroy($(this).attr('href'));
+                        formAjax('DELETE', $(this).attr('href'));
                     }
                 }
             });
@@ -60,71 +66,20 @@
                 event.preventDefault();
 
                 if (confirm('Deseja realmente restaurar o registro?')) {
-                    restore($(this).attr('href'));
+                    formAjax('PUT', $(this).attr('href'));
                 }
             });
         });
 
-        function destroy(href) {
-            var form, input;
+        function formAjax(method, url) {
+            var form = $('#form-ajax');
 
-            form = document.createElement('form');
-
-            input = document.createElement('input');
-            input.type = 'hidden';
-            input.name = '_token';
-            input.value = Laravel.csrfToken;
-            form.appendChild(input);
-
-            input = document.createElement('input');
-            input.type = 'hidden';
-            input.name = '_method';
-            input.value = 'DELETE';
-            form.appendChild(input);
-
-            input = document.createElement('input');
-            input.type = 'hidden';
-            input.name = '_previous';
-            input.value = Laravel.urlFull;
-            form.appendChild(input);
-
-            form.setAttribute('method', 'POST');
-
-            form.setAttribute('action', href);
-
+            form.attr('action', url);
+            form.attr('method', 'POST');
+            form.find('input[name=_token]').val(window.Laravel.csrfToken);
+            form.find('input[name=_method]').val(method);
+            form.find('input[name=_previous]').val(window.Laravel.urlFull);
             $(form).submit();
-        }
-
-        function restore(href) {
-            var form, input;
-
-            form = document.createElement('form');
-
-            input = document.createElement('input');
-            input.type = 'hidden';
-            input.name = '_token';
-            input.value = Laravel.csrfToken;
-            form.appendChild(input);
-
-            input = document.createElement('input');
-            input.type = 'hidden';
-            input.name = '_method';
-            input.value = 'PUT';
-            form.appendChild(input);
-
-            input = document.createElement('input');
-            input.type = 'hidden';
-            input.name = '_previous';
-            input.value = Laravel.urlFull;
-            form.appendChild(input);
-
-            form.setAttribute('method', 'POST');
-
-            form.setAttribute('action', href);
-
-            $(form).submit()
-
-            console.log(form);
         }
     </script>
 </body>
