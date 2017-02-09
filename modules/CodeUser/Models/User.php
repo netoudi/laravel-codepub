@@ -5,6 +5,7 @@ namespace Modules\CodeUser\Models;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Collection;
 use Modules\CodeBook\Models\Book;
 
 class User extends Authenticatable
@@ -39,5 +40,23 @@ class User extends Authenticatable
     public function books()
     {
         return $this->hasMany(Book::class);
+    }
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class);
+    }
+
+    /**
+     * @param Collection|string $role
+     * @return boolean
+     */
+    public function hasRole($role)
+    {
+        if (is_string($role)) {
+            return (boolean) $this->roles->contains('name', $role);
+        }
+
+        return (boolean) $role->intersect($this->roles)->count();
     }
 }

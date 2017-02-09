@@ -3,6 +3,8 @@
 namespace Modules\CodeUser\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Modules\CodeUser\Repositories\RoleRepository;
+use Modules\CodeUser\Repositories\RoleRepositoryEloquent;
 use Modules\CodeUser\Repositories\UserRepository;
 use Modules\CodeUser\Repositories\UserRepositoryEloquent;
 
@@ -23,6 +25,7 @@ class RepositoryServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(UserRepository::class, UserRepositoryEloquent::class);
+        $this->app->bind(RoleRepository::class, RoleRepositoryEloquent::class);
     }
 
     /**

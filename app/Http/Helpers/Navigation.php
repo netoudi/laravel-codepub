@@ -13,7 +13,13 @@ if (!function_exists('navbar')) {
 
         if (Auth::check()) {
             $links = Navigation::links([
-                ['link' => route('users.index'), 'title' => 'Usuários'],
+                [
+                    'Segurança',
+                    [
+                        ['link' => route('users.index'), 'title' => 'Usuários'],
+                        ['link' => route('roles.index'), 'title' => 'Papéis'],
+                    ],
+                ],
                 ['link' => route('categories.index'), 'title' => 'Categorias'],
                 ['link' => route('books.index'), 'title' => 'Livros'],
                 [
