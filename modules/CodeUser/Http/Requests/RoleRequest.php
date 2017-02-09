@@ -3,6 +3,7 @@
 namespace Modules\CodeUser\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class RoleRequest extends FormRequest
 {
@@ -13,11 +14,11 @@ class RoleRequest extends FormRequest
      */
     public function authorize()
     {
-        if ($this->getMethod() === 'DELETE' || $this->getMethod() === 'PUT') {
+        if (($this->getMethod() === 'DELETE' || $this->getMethod() === 'PUT') && Auth::user()->isAdmin()) {
             return $this->route('role')->name !== config('codeuser.acl.role_admin');
         }
 
-        return true;
+        return Auth::user()->isAdmin();
     }
 
     /**

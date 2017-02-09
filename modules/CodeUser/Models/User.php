@@ -59,4 +59,12 @@ class User extends Authenticatable
 
         return (boolean) $role->intersect($this->roles)->count();
     }
+
+    /**
+     * @return boolean
+     */
+    public function isAdmin()
+    {
+        return $this->hasRole(config('codeuser.acl.role_admin'));
+    }
 }
