@@ -116,6 +116,7 @@ return [
         'name' => 'nome',
         'price' => 'preço',
         'categories_*' => 'categoria :num',
+        'roles.*' => 'papel',
     ],
 
 ];

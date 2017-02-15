@@ -36,6 +36,7 @@ class UserRequest extends FormRequest
             return [
                 'name' => 'required|max:255',
                 'email' => 'required|max:255|email|unique:users,email,' . (int) $this->route('user')->id,
+                'roles.*' => 'exists:roles,id',
             ];
         }
 
@@ -43,6 +44,7 @@ class UserRequest extends FormRequest
             'name' => 'required|max:255',
             'email' => 'required|max:255|email|unique:users,email',
             'password' => 'required|confirmed|min:6|max:15',
+            'roles.*' => 'exists:roles,id',
         ];
     }
 }

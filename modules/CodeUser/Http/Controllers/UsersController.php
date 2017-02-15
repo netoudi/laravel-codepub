@@ -7,6 +7,7 @@ use Modules\CodeUser\Annotations\Mapping as Permission;
 use Modules\CodeUser\Http\Requests\UserRequest;
 use Modules\CodeUser\Models\User;
 use Modules\CodeUser\Repositories\CategoryRepository;
+use Modules\CodeUser\Repositories\RoleRepository;
 use Modules\CodeUser\Repositories\UserRepository;
 
 /**
@@ -20,13 +21,20 @@ class UsersController extends Controller
     private $userRepository;
 
     /**
+     * @var RoleRepository
+     */
+    private $roleRepository;
+
+    /**
      * UsersController constructor.
      *
      * @param UserRepository $userRepository
+     * @param RoleRepository $roleRepository
      */
-    public function __construct(UserRepository $userRepository)
+    public function __construct(UserRepository $userRepository, RoleRepository $roleRepository)
     {
         $this->userRepository = $userRepository;
+        $this->roleRepository = $roleRepository;
     }
 
     /**
@@ -52,7 +60,9 @@ class UsersController extends Controller
      */
     public function create()
     {
-        return view('codeuser::users.form');
+        $roles = $this->roleRepository->all()->pluck('name', 'id');
+
+        return view('codeuser::users.form', compact('roles'));
     }
 
     /**
@@ -92,7 +102,9 @@ class UsersController extends Controller
      */
     public function edit(User $user)
     {
-        return view('codeuser::users.form', compact('user'));
+        $roles = $this->roleRepository->all()->pluck('name', 'id');
+
+        return view('codeuser::users.form', compact('user', 'roles'));
     }
 
     /**
@@ -105,7 +117,7 @@ class UsersController extends Controller
      */
     public function update(UserRequest $request, User $user)
     {
-        $this->userRepository->update($request->only(['name', 'email']), $user->id);
+        $this->userRepository->update($request->only(['name', 'email', 'roles']), $user->id);
 
         return redirect()->to($request->get('_previous'))->with('success', 'Usuário alterado com sucesso.');
     }

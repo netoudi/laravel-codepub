@@ -2,6 +2,7 @@
 
 namespace Modules\CodeUser\Models;
 
+use Collective\Html\Eloquent\FormAccessible;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -10,7 +11,7 @@ use Modules\CodeBook\Models\Book;
 
 class User extends Authenticatable
 {
-    use Notifiable, SoftDeletes;
+    use Notifiable, SoftDeletes, FormAccessible;
 
     protected $dates = [
         'deleted_at',
@@ -36,6 +37,11 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    public function formRolesAttribute()
+    {
+        return $this->roles->pluck('id')->all();
+    }
 
     public function books()
     {

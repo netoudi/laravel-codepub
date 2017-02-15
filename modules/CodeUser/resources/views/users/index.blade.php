@@ -35,6 +35,7 @@
                                     <th width="5%">Id</th>
                                     <th>Nome</th>
                                     <th>E-mail</th>
+                                    <th>Papel</th>
                                     <th width="5%">Ações</th>
                                 </tr>
                                 </thead>
@@ -44,6 +45,7 @@
                                         <td>{{ $user->id }}</td>
                                         <td>{{ $user->name }}</td>
                                         <td>{{ $user->email }}</td>
+                                        <td>{{ $user->roles->implode('name', ' | ') }}</td>
                                         <td nowrap="nowrap">
                                             <a href="{{ route('users.show', ['id' => $user->id]) }}"
                                                class="btn btn-primary btn-xs">Vizualizar</a>

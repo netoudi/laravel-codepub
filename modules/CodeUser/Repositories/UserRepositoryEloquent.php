@@ -20,6 +20,22 @@ class UserRepositoryEloquent extends BaseRepository implements UserRepository
         'name' => 'like',
     ];
 
+    public function create(array $attributes)
+    {
+        $model = parent::create($attributes);
+        $model->roles()->sync($attributes['roles']);
+
+        return $model;
+    }
+
+    public function update(array $attributes, $id)
+    {
+        $model = parent::update($attributes, $id);
+        $model->roles()->sync($attributes['roles']);
+
+        return $model;
+    }
+
     /**
      * Specify Model class name
      *

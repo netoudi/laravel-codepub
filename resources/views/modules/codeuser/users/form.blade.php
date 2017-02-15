@@ -44,6 +44,12 @@
                             {!! Html::closeFormGroup() !!}
                         @endif
 
+                        {!! Html::openFormGroup(['roles', 'roles.*'], $errors) !!}
+                        {!! Form::label('roles[]', 'Papel:', ['class' => 'control-label']) !!}
+                        {!! Form::select('roles[]', $roles, null, ['class' => 'form-control', 'multiple' => true]) !!}
+                        {!! Form::error('roles.*', $errors) !!}
+                        {!! Html::closeFormGroup() !!}
+
                         <hr>
 
                         <div class="form-group text-right">

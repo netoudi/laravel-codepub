@@ -25,6 +25,10 @@
                                 <hr>
                                 <dt><strong>E-mail:</strong></dt>
                                 <dd>{{ $user->email }}</dd>
+
+                                <hr>
+                                <dt><strong>Papel:</strong></dt>
+                                <dd>{{ $user->roles->implode('name', ' | ') }}</dd>
                             </dl>
                         </div>
                     </div>
