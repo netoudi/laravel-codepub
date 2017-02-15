@@ -117,6 +117,7 @@ return [
         'price' => 'preço',
         'categories_*' => 'categoria :num',
         'roles.*' => 'papel',
+        'permissions.*' => 'permissão',
     ],
 
 ];

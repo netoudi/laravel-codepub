@@ -3,9 +3,13 @@
 namespace Modules\CodeUser\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Modules\CodeUser\Criteria\FindPermissionsGroupCriteria;
+use Modules\CodeUser\Criteria\FindPermissionsResourceCriteria;
+use Modules\CodeUser\Http\Requests\PermissionRequest;
 use Modules\CodeUser\Http\Requests\RoleRequest;
 use Modules\CodeUser\Models\Role;
 use Modules\CodeUser\Repositories\CategoryRepository;
+use Modules\CodeUser\Repositories\PermissionRepository;
 use Modules\CodeUser\Repositories\RoleRepository;
 
 class RolesController extends Controller
@@ -16,13 +20,20 @@ class RolesController extends Controller
     private $roleRepository;
 
     /**
+     * @var PermissionRepository
+     */
+    private $permissionRepository;
+
+    /**
      * RolesController constructor.
      *
      * @param RoleRepository $roleRepository
+     * @param PermissionRepository $permissionRepository
      */
-    public function __construct(RoleRepository $roleRepository)
+    public function __construct(RoleRepository $roleRepository, PermissionRepository $permissionRepository)
     {
         $this->roleRepository = $roleRepository;
+        $this->permissionRepository = $permissionRepository;
     }
 
     /**
@@ -110,5 +121,37 @@ class RolesController extends Controller
         $role->delete();
 
         return redirect()->to($request->get('_previous'))->with('success', 'Papel excluído com sucesso');
+    }
+
+    /**
+     * @param Role $role
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function editPermissions(Role $role)
+    {
+        $this->permissionRepository->pushCriteria(new FindPermissionsResourceCriteria());
+        $permissions = $this->permissionRepository->all();
+
+        $this->permissionRepository->resetCriteria();
+        $this->permissionRepository->pushCriteria(new FindPermissionsGroupCriteria());
+        $permissionsGroup = $this->permissionRepository->all(['name', 'description']);
+
+        return view('codeuser::roles.permissions', compact('role', 'permissions', 'permissionsGroup'));
+    }
+
+    /**
+     * @param PermissionRequest $request
+     * @param Role $role
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function updatePermissions(PermissionRequest $request, Role $role)
+    {
+        if ($request->get('permissions')) {
+            $role->permissions()->sync($request->get('permissions'));
+        } else {
+            $role->permissions()->sync([]);
+        }
+
+        return redirect()->route('roles.index')->with('success', 'Permissões atualizadas com sucesso');
     }
 }

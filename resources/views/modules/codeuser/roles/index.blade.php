@@ -45,6 +45,8 @@
                                         <td>{{ $role->name }}</td>
                                         <td>{{ $role->description }}</td>
                                         <td nowrap="nowrap">
+                                            <a href="{{ route('roles.permissions.edit', ['id' => $role->id]) }}"
+                                               class="btn btn-warning btn-xs">Permissões</a>
                                             <a href="{{ route('roles.show', ['id' => $role->id]) }}"
                                                class="btn btn-primary btn-xs">Vizualizar</a>
                                             @if($role->name == config('codeuser.acl.role_admin'))

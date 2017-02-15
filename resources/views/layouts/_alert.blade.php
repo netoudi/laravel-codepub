@@ -1,3 +1,16 @@
+@if($errors->any())
+    <div class="alert alert-danger alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <ul class="list-group list-unstyled">
+            @foreach($errors->all() as $error)
+                <li class="list-group-item-danger"><i class="glyph-icon icon-caret-right"></i> {{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
 @if (session('success'))
     {!! Alert::success(session('success'))->close() !!}
 @endif

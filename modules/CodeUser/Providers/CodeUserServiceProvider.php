@@ -8,7 +8,6 @@ use Doctrine\Common\Annotations\CachedReader;
 use Doctrine\Common\Annotations\Reader;
 use Doctrine\Common\Cache\FilesystemCache;
 use Illuminate\Support\ServiceProvider;
-use Modules\CodeUser\Annotations\PermissionReader;
 use Modules\CodeUser\Console\CreatePermissionsCommand;
 
 class CodeUserServiceProvider extends ServiceProvider
