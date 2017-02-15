@@ -152,6 +152,9 @@ class CodeUserServiceProvider extends ServiceProvider
         });
 
         $this->commands($this->commands);
+
+        $loader = \Illuminate\Foundation\AliasLoader::getInstance();
+        $loader->alias('PermissionReader', \Modules\CodeUser\Facades\PermissionReader::class);
     }
 
     protected function registerAnnotations()

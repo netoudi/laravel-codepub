@@ -3,7 +3,6 @@
 namespace Modules\CodeUser\Console;
 
 use Illuminate\Console\Command;
-use Modules\CodeUser\Annotations\PermissionReader;
 use Modules\CodeUser\Repositories\PermissionRepository;
 
 class CreatePermissionsCommand extends Command
@@ -28,21 +27,14 @@ class CreatePermissionsCommand extends Command
     private $permissionRepository;
 
     /**
-     * @var PermissionReader
-     */
-    private $permissionReader;
-
-    /**
      * Create a new command instance.
      *
      * @param PermissionRepository $permissionRepository
-     * @param PermissionReader $permissionReader
      */
-    public function __construct(PermissionRepository $permissionRepository, PermissionReader $permissionReader)
+    public function __construct(PermissionRepository $permissionRepository)
     {
         parent::__construct();
         $this->permissionRepository = $permissionRepository;
-        $this->permissionReader = $permissionReader;
     }
 
     /**
@@ -52,7 +44,7 @@ class CreatePermissionsCommand extends Command
      */
     public function fire()
     {
-        $permissions = $this->permissionReader->getPermissions();
+        $permissions = \PermissionReader::getPermissions();
 
         foreach ($permissions as $permission) {
             if (!$this->existsPermission($permission)) {
