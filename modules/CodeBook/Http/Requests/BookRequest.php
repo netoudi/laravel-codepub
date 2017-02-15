@@ -14,7 +14,15 @@ class BookRequest extends FormRequest
      */
     public function authorize()
     {
-        return $this->route('book') ? $this->route('book')->user_id == $this->user()->id : true;
+        if ($this->getMethod() === 'DELETE') {
+            return $this->user()->can('delete', $this->route('book'));
+        }
+
+        if ($this->getMethod() === 'PUT') {
+            return $this->user()->can('update', $this->route('book'));
+        }
+
+        return true;
     }
 
     /**
@@ -24,6 +32,10 @@ class BookRequest extends FormRequest
      */
     public function rules()
     {
+        if ($this->getMethod() === 'DELETE') {
+            return [];
+        }
+
         return [
             'title' => 'required|max:255',
             'subtitle' => 'required|max:255',

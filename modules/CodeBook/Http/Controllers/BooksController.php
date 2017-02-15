@@ -108,7 +108,6 @@ class BooksController extends Controller
      */
     public function update(BookRequest $request, Book $book)
     {
-        //        $book->fill($request->all())->save();
         $this->bookRepository->update($request->all(), $book->id);
 
         return redirect()->to($request->get('_previous'))->with('success', 'Livro alterado com sucesso.');
@@ -117,11 +116,11 @@ class BooksController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param Request $request
+     * @param BookRequest $request
      * @param \Modules\CodeBook\Models\Book $book
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, Book $book)
+    public function destroy(BookRequest $request, Book $book)
     {
         $book->delete();
 
