@@ -11,5 +11,8 @@ return [
 
     'acl' => [
         'role_admin' => env('ROLE_ADMIN', 'Admin'),
+        'controllers_annotations' => [
+            base_path('modules/CodeUser/Http/Controllers'),
+        ],
     ],
 ];

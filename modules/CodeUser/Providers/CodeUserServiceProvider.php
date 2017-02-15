@@ -2,7 +2,13 @@
 
 namespace Modules\CodeUser\Providers;
 
+use Doctrine\Common\Annotations\AnnotationReader;
+use Doctrine\Common\Annotations\AnnotationRegistry;
+use Doctrine\Common\Annotations\CachedReader;
+use Doctrine\Common\Annotations\Reader;
+use Doctrine\Common\Cache\FilesystemCache;
 use Illuminate\Support\ServiceProvider;
+use Modules\CodeUser\Annotations\PermissionReader;
 
 class CodeUserServiceProvider extends ServiceProvider
 {
@@ -26,6 +32,10 @@ class CodeUserServiceProvider extends ServiceProvider
         $this->registerMigrations();
         $this->registerSeeds();
         $this->registerFactories();
+
+        /** @var PermissionReader $reader */
+        $reader = app(PermissionReader::class);
+        dd($reader->getPermissions());
     }
 
     /**
@@ -125,6 +135,22 @@ class CodeUserServiceProvider extends ServiceProvider
     {
         $this->app->register(RouteServiceProvider::class);
         $this->app->register(RepositoryServiceProvider::class);
+        $this->registerAnnotations();
+
+        $this->app->bind(Reader::class, function () {
+            return new CachedReader(
+                new AnnotationReader(),
+                new FilesystemCache(storage_path('framework/cache/doctrine-annotations')),
+                env('APP_DEBUG')
+            );
+        });
+    }
+
+    protected function registerAnnotations()
+    {
+        $loader = require __DIR__ . '/../../../vendor/autoload.php';
+
+        AnnotationRegistry::registerLoader([$loader, 'loadClass']);
     }
 
     /**

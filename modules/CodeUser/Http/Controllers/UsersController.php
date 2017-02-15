@@ -3,11 +3,15 @@
 namespace Modules\CodeUser\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Modules\CodeUser\Annotations\Mapping as Permission;
 use Modules\CodeUser\Http\Requests\UserRequest;
 use Modules\CodeUser\Models\User;
 use Modules\CodeUser\Repositories\CategoryRepository;
 use Modules\CodeUser\Repositories\UserRepository;
 
+/**
+ * @Permission\Controller(name="users-admin", description="Administração de usuários")
+ */
 class UsersController extends Controller
 {
     /**
@@ -27,6 +31,7 @@ class UsersController extends Controller
 
     /**
      * Display a listing of the resource.
+     * @Permission\Action(name="list", description="Ver listagem de usuários")
      *
      * @param Request $request
      * @return \Illuminate\Http\Response
@@ -41,6 +46,7 @@ class UsersController extends Controller
 
     /**
      * Show the form for creating a new resource.
+     * @Permission\Action(name="store", description="Criar usuários")
      *
      * @return \Illuminate\Http\Response
      */
@@ -51,6 +57,7 @@ class UsersController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     * @Permission\Action(name="store", description="Criar usuários")
      *
      * @param UserRequest $request
      * @return \Illuminate\Http\Response
@@ -66,6 +73,7 @@ class UsersController extends Controller
 
     /**
      * Display the specified resource.
+     * @Permission\Action(name="list", description="Ver listagem de usuários")
      *
      * @param \Modules\CodeUser\Models\User $user
      * @return \Illuminate\Http\Response
@@ -77,6 +85,7 @@ class UsersController extends Controller
 
     /**
      * Show the form for editing the specified resource.
+     * @Permission\Action(name="update", description="Atualizar usuários")
      *
      * @param \Modules\CodeUser\Models\User $user
      * @return \Illuminate\Http\Response
@@ -88,6 +97,7 @@ class UsersController extends Controller
 
     /**
      * Update the specified resource in storage.
+     * @Permission\Action(name="update", description="Atualizar usuários")
      *
      * @param UserRequest $request
      * @param \Modules\CodeUser\Models\User $user
@@ -102,6 +112,7 @@ class UsersController extends Controller
 
     /**
      * Remove the specified resource from storage.
+     * @Permission\Action(name="destroy", description="Excluir usuários")
      *
      * @param UserRequest $request
      * @param \Modules\CodeUser\Models\User $user
