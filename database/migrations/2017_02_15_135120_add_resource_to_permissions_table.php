@@ -1,0 +1,34 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class AddResourceToPermissionsTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::table('permissions', function (Blueprint $table) {
+            $table->string('resource_name')->nullable();
+            $table->string('resource_description')->nullable();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::table('permissions', function (Blueprint $table) {
+            $table->dropColumn('resource_name');
+            $table->dropColumn('resource_description');
+        });
+    }
+}

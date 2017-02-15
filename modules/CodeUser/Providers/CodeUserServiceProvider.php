@@ -9,6 +9,7 @@ use Doctrine\Common\Annotations\Reader;
 use Doctrine\Common\Cache\FilesystemCache;
 use Illuminate\Support\ServiceProvider;
 use Modules\CodeUser\Annotations\PermissionReader;
+use Modules\CodeUser\Console\CreatePermissionsCommand;
 
 class CodeUserServiceProvider extends ServiceProvider
 {
@@ -18,6 +19,15 @@ class CodeUserServiceProvider extends ServiceProvider
      * @var bool
      */
     protected $defer = false;
+
+    /**
+     * The console commands.
+     *
+     * @var array
+     */
+    protected $commands = [
+        CreatePermissionsCommand::class,
+    ];
 
     /**
      * Boot the application events.
@@ -32,10 +42,6 @@ class CodeUserServiceProvider extends ServiceProvider
         $this->registerMigrations();
         $this->registerSeeds();
         $this->registerFactories();
-
-        /** @var PermissionReader $reader */
-        $reader = app(PermissionReader::class);
-        dd($reader->getPermissions());
     }
 
     /**
@@ -144,6 +150,8 @@ class CodeUserServiceProvider extends ServiceProvider
                 env('APP_DEBUG')
             );
         });
+
+        $this->commands($this->commands);
     }
 
     protected function registerAnnotations()

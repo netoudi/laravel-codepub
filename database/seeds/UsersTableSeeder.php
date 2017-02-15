@@ -11,6 +11,8 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
+        \Artisan::call('codeuser:make-permissions');
+
         factory(\Modules\CodeUser\Models\User::class, 1)->create([
             'name' => 'Author One',
             'email' => 'author1@codepub.com',
