@@ -36,7 +36,7 @@ class RouteServiceProvider extends ServiceProvider
     public function map(Router $router)
     {
         $router->group([
-            'middleware' => ['web', 'auth'],
+            'middleware' => ['web', 'auth', 'auth.resource'],
             'namespace' => $this->rootUrlNamespace,
         ], function () {
             require __DIR__ . '/../Http/routes.php';
