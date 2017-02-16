@@ -6,12 +6,14 @@ use Illuminate\Http\Request;
 use Modules\CodeUser\Annotations\Mapping as Permission;
 use Modules\CodeUser\Http\Requests\UserRequest;
 use Modules\CodeUser\Models\User;
-use Modules\CodeUser\Repositories\CategoryRepository;
 use Modules\CodeUser\Repositories\RoleRepository;
 use Modules\CodeUser\Repositories\UserRepository;
 
 /**
- * @Permission\Controller(name="users-admin", description="Administração de usuários")
+ * Class UsersController
+ * @Permission\Controller(name="codeuser-users", description="Administração de usuários")
+ *
+ * @package Modules\CodeUser\Http\Controllers
  */
 class UsersController extends Controller
 {

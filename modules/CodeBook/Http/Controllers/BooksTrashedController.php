@@ -4,7 +4,14 @@ namespace Modules\CodeBook\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Modules\CodeBook\Repositories\BookRepository;
+use Modules\CodeUser\Annotations\Mapping as Permission;
 
+/**
+ * Class BooksTrashedController
+ * @Permission\Controller(name="codebook-books-trashed", description="Administração de livros na lixeira")
+ *
+ * @package Modules\CodeBook\Http\Controllers
+ */
 class BooksTrashedController extends Controller
 {
     /**
@@ -24,6 +31,7 @@ class BooksTrashedController extends Controller
 
     /**
      * Display a listing of the resource.
+     * @Permission\Action(name="list", description="Ver listagem de livros na lixeira")
      *
      * @param Request $request
      * @return \Illuminate\Http\Response
@@ -38,6 +46,7 @@ class BooksTrashedController extends Controller
 
     /**
      * Display the specified resource.
+     * @Permission\Action(name="list", description="Ver listagem de livros na lixeira")
      *
      * @param $id
      * @return \Illuminate\Http\Response
@@ -51,6 +60,7 @@ class BooksTrashedController extends Controller
 
     /**
      * Update the specified resource in storage.
+     * @Permission\Action(name="update", description="Atualizar livros na lixeira")
      *
      * @param Request $request
      * @param $id
@@ -65,6 +75,7 @@ class BooksTrashedController extends Controller
 
     /**
      * Remove the specified resource from storage.
+     * @Permission\Action(name="destroy", description="Excluir livros na lixeira")
      *
      * @param Request $request
      * @param $id

@@ -6,7 +6,14 @@ use Illuminate\Http\Request;
 use Modules\CodeBook\Http\Requests\CategoryRequest;
 use Modules\CodeBook\Models\Category;
 use Modules\CodeBook\Repositories\CategoryRepository;
+use Modules\CodeUser\Annotations\Mapping as Permission;
 
+/**
+ * Class CategoriesController
+ * @Permission\Controller(name="codebook-categories", description="Administração de categorias")
+ *
+ * @package Modules\CodeBook\Http\Controllers
+ */
 class CategoriesController extends Controller
 {
     /**
@@ -26,6 +33,7 @@ class CategoriesController extends Controller
 
     /**
      * Display a listing of the resource.
+     * @Permission\Action(name="list", description="Ver listagem de categorias")
      *
      * @param Request $request
      * @return \Illuminate\Http\Response
@@ -40,6 +48,7 @@ class CategoriesController extends Controller
 
     /**
      * Show the form for creating a new resource.
+     * @Permission\Action(name="store", description="Criar categorias")
      *
      * @return \Illuminate\Http\Response
      */
@@ -50,6 +59,7 @@ class CategoriesController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     * @Permission\Action(name="store", description="Criar categorias")
      *
      * @param CategoryRequest $request
      * @return \Illuminate\Http\Response
@@ -63,6 +73,7 @@ class CategoriesController extends Controller
 
     /**
      * Display the specified resource.
+     * @Permission\Action(name="list", description="Ver listagem de categorias")
      *
      * @param Category $category
      * @return \Illuminate\Http\Response
@@ -74,6 +85,7 @@ class CategoriesController extends Controller
 
     /**
      * Show the form for editing the specified resource.
+     * @Permission\Action(name="update", description="Atualizar categorias")
      *
      * @param \Modules\CodeBook\Models\Category $category
      * @return \Illuminate\Http\Response
@@ -85,6 +97,7 @@ class CategoriesController extends Controller
 
     /**
      * Update the specified resource in storage.
+     * @Permission\Action(name="update", description="Atualizar categorias")
      *
      * @param CategoryRequest $request
      * @param Category $category
@@ -99,6 +112,7 @@ class CategoriesController extends Controller
 
     /**
      * Remove the specified resource from storage.
+     * @Permission\Action(name="destroy", description="Excluir categorias")
      *
      * @param Request $request
      * @param \Modules\CodeBook\Models\Category $category

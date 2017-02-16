@@ -8,7 +8,14 @@ use Modules\CodeBook\Http\Requests\BookRequest;
 use Modules\CodeBook\Models\Book;
 use Modules\CodeBook\Repositories\BookRepository;
 use Modules\CodeBook\Repositories\CategoryRepository;
+use Modules\CodeUser\Annotations\Mapping as Permission;
 
+/**
+ * Class BooksController
+ * @Permission\Controller(name="codebook-books", description="Administração de livros")
+ *
+ * @package Modules\CodeBook\Http\Controllers
+ */
 class BooksController extends Controller
 {
     /**
@@ -35,6 +42,7 @@ class BooksController extends Controller
 
     /**
      * Display a listing of the resource.
+     * @Permission\Action(name="list", description="Ver listagem de livros")
      *
      * @param Request $request
      * @return \Illuminate\Http\Response
@@ -49,6 +57,7 @@ class BooksController extends Controller
 
     /**
      * Show the form for creating a new resource.
+     * @Permission\Action(name="store", description="Criar livros")
      *
      * @return \Illuminate\Http\Response
      */
@@ -61,6 +70,7 @@ class BooksController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     * @Permission\Action(name="store", description="Criar livros")
      *
      * @param BookRequest $request
      * @return \Illuminate\Http\Response
@@ -76,6 +86,7 @@ class BooksController extends Controller
 
     /**
      * Display the specified resource.
+     * @Permission\Action(name="list", description="Ver listagem de livros")
      *
      * @param \Modules\CodeBook\Models\Book $book
      * @return \Illuminate\Http\Response
@@ -87,6 +98,7 @@ class BooksController extends Controller
 
     /**
      * Show the form for editing the specified resource.
+     * @Permission\Action(name="update", description="Atualizar livros")
      *
      * @param \Modules\CodeBook\Models\Book $book
      * @return \Illuminate\Http\Response
@@ -101,6 +113,7 @@ class BooksController extends Controller
 
     /**
      * Update the specified resource in storage.
+     * @Permission\Action(name="update", description="Atualizar livros")
      *
      * @param BookRequest $request
      * @param \Modules\CodeBook\Models\Book $book
@@ -115,6 +128,7 @@ class BooksController extends Controller
 
     /**
      * Remove the specified resource from storage.
+     * @Permission\Action(name="destroy", description="Excluir livros")
      *
      * @param BookRequest $request
      * @param \Modules\CodeBook\Models\Book $book

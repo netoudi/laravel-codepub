@@ -22,7 +22,7 @@
                                         <ul class="list-inline">
                                             <?php $permissionsSubGroup = $permissions->filter(
                                                 function ($permission) use ($group) {
-                                                    return $permission->name = $group->name;
+                                                    return $permission->name === $group->name;
                                                 });
                                             ?>
                                             @foreach($permissionsSubGroup as $permission)

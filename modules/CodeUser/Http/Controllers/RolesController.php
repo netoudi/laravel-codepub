@@ -3,15 +3,21 @@
 namespace Modules\CodeUser\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Modules\CodeUser\Annotations\Mapping as Permission;
 use Modules\CodeUser\Criteria\FindPermissionsGroupCriteria;
 use Modules\CodeUser\Criteria\FindPermissionsResourceCriteria;
 use Modules\CodeUser\Http\Requests\PermissionRequest;
 use Modules\CodeUser\Http\Requests\RoleRequest;
 use Modules\CodeUser\Models\Role;
-use Modules\CodeUser\Repositories\CategoryRepository;
 use Modules\CodeUser\Repositories\PermissionRepository;
 use Modules\CodeUser\Repositories\RoleRepository;
 
+/**
+ * Class RolesController
+ * @Permission\Controller(name="codeuser-roles", description="Administração de papéis")
+ *
+ * @package Modules\CodeUser\Http\Controllers
+ */
 class RolesController extends Controller
 {
     /**
@@ -38,6 +44,7 @@ class RolesController extends Controller
 
     /**
      * Display a listing of the resource.
+     * @Permission\Action(name="list", description="Ver listagem de papéis")
      *
      * @param Request $request
      * @return \Illuminate\Http\Response
@@ -52,6 +59,7 @@ class RolesController extends Controller
 
     /**
      * Show the form for creating a new resource.
+     * @Permission\Action(name="store", description="Criar papéis")
      *
      * @return \Illuminate\Http\Response
      */
@@ -62,6 +70,7 @@ class RolesController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     * @Permission\Action(name="store", description="Criar papéis")
      *
      * @param RoleRequest $request
      * @return \Illuminate\Http\Response
@@ -75,6 +84,7 @@ class RolesController extends Controller
 
     /**
      * Display the specified resource.
+     * @Permission\Action(name="list", description="Ver listagem de papéis")
      *
      * @param \Modules\CodeUser\Models\Role $role
      * @return \Illuminate\Http\Response
@@ -86,6 +96,7 @@ class RolesController extends Controller
 
     /**
      * Show the form for editing the specified resource.
+     * @Permission\Action(name="update", description="Atualizar papéis")
      *
      * @param \Modules\CodeUser\Models\Role $role
      * @return \Illuminate\Http\Response
@@ -97,6 +108,7 @@ class RolesController extends Controller
 
     /**
      * Update the specified resource in storage.
+     * @Permission\Action(name="update", description="Atualizar papéis")
      *
      * @param RoleRequest $request
      * @param \Modules\CodeUser\Models\Role $role
@@ -111,6 +123,7 @@ class RolesController extends Controller
 
     /**
      * Remove the specified resource from storage.
+     * @Permission\Action(name="destroy", description="Excluir papéis")
      *
      * @param RoleRequest $request
      * @param \Modules\CodeUser\Models\Role $role
@@ -124,6 +137,7 @@ class RolesController extends Controller
     }
 
     /**
+     * @Permission\Action(name="permissions", description="Atualizar permissões")
      * @param Role $role
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
@@ -134,12 +148,13 @@ class RolesController extends Controller
 
         $this->permissionRepository->resetCriteria();
         $this->permissionRepository->pushCriteria(new FindPermissionsGroupCriteria());
-        $permissionsGroup = $this->permissionRepository->all(['name', 'description']);
+        $permissionsGroup = $this->permissionRepository->orderBy('id')->all(['name', 'description']);
 
         return view('codeuser::roles.permissions', compact('role', 'permissions', 'permissionsGroup'));
     }
 
     /**
+     * @Permission\Action(name="permissions", description="Atualizar permissões")
      * @param PermissionRequest $request
      * @param Role $role
      * @return \Illuminate\Http\RedirectResponse
