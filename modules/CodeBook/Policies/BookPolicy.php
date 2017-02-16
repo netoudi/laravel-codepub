@@ -11,6 +11,18 @@ class BookPolicy
     use HandlesAuthorization;
 
     /**
+     * Determine whether the user can view the book.
+     *
+     * @param User $user
+     * @param Book $book
+     * @return boolean
+     */
+    public function view(User $user, Book $book)
+    {
+        return $user->id === $book->user_id;
+    }
+
+    /**
      * Determine whether the user can update the book.
      *
      * @param User $user

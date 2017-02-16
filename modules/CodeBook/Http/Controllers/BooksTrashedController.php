@@ -3,6 +3,8 @@
 namespace Modules\CodeBook\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Modules\CodeBook\Criteria\FindBooksAuthorCriteria;
+use Modules\CodeBook\Models\Book;
 use Modules\CodeBook\Repositories\BookRepository;
 use Modules\CodeUser\Annotations\Mapping as Permission;
 
@@ -38,6 +40,10 @@ class BooksTrashedController extends Controller
      */
     public function index(Request $request)
     {
+        if (!\Auth::user()->isAdmin()) {
+            $this->bookRepository->pushCriteria(new FindBooksAuthorCriteria());
+        }
+
         $search = $request->get('search');
         $books = $this->bookRepository->onlyTrashed()->paginate(10);
 
@@ -48,12 +54,14 @@ class BooksTrashedController extends Controller
      * Display the specified resource.
      * @Permission\Action(name="list", description="Ver listagem de livros na lixeira")
      *
-     * @param $id
+     * @param $bookId
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($bookId)
     {
-        $book = $this->bookRepository->onlyTrashed()->find($id);
+        $this->checkPermission($bookId, 'view');
+
+        $book = $this->bookRepository->onlyTrashed()->find($bookId);
 
         return view('codebook::trashed.books.show', compact('book'));
     }
@@ -63,12 +71,14 @@ class BooksTrashedController extends Controller
      * @Permission\Action(name="update", description="Atualizar livros na lixeira")
      *
      * @param Request $request
-     * @param $id
+     * @param $bookId
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $bookId)
     {
-        $this->bookRepository->onlyTrashed()->restore($id);
+        $this->checkPermission($bookId, 'update');
+
+        $this->bookRepository->onlyTrashed()->restore($bookId);
 
         return redirect()->to($request->get('_previous'))->with('success', 'Livro restaurado com sucesso.');
     }
@@ -78,14 +88,33 @@ class BooksTrashedController extends Controller
      * @Permission\Action(name="destroy", description="Excluir livros na lixeira")
      *
      * @param Request $request
-     * @param $id
+     * @param $bookId
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, $id)
+    public function destroy(Request $request, $bookId)
     {
-        $book = $this->bookRepository->onlyTrashed()->find($id);
+        $this->checkPermission($bookId, 'delete');
+
+        $book = $this->bookRepository->onlyTrashed()->find($bookId);
         $book->forceDelete();
 
         return redirect()->to($request->get('_previous'))->with('success', 'Livro excluído com sucesso');
+    }
+
+    /**
+     * @param integer $bookId
+     * @param string $ability | view, update, delete
+     * @return Book
+     * @throws AuthorizationException
+     */
+    private function checkPermission($bookId, $ability)
+    {
+        $book = $this->bookRepository->withTrashed()->find($bookId);
+
+        if (\Auth::user()->cannot($ability, $book)) {
+            throw new AuthorizationException('Usuário não autorizado');
+        }
+
+        return $book;
     }
 }

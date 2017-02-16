@@ -4,6 +4,7 @@ namespace Modules\CodeBook\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Modules\CodeBook\Criteria\FindBooksAuthorCriteria;
 use Modules\CodeBook\Http\Requests\BookRequest;
 use Modules\CodeBook\Models\Book;
 use Modules\CodeBook\Repositories\BookRepository;
@@ -49,6 +50,10 @@ class BooksController extends Controller
      */
     public function index(Request $request)
     {
+        if (!\Auth::user()->isAdmin()) {
+            $this->bookRepository->pushCriteria(new FindBooksAuthorCriteria());
+        }
+
         $search = $request->get('search');
         $books = $this->bookRepository->paginate(10);
 
@@ -88,11 +93,13 @@ class BooksController extends Controller
      * Display the specified resource.
      * @Permission\Action(name="list", description="Ver listagem de livros")
      *
-     * @param \Modules\CodeBook\Models\Book $book
+     * @param integer $bookId
      * @return \Illuminate\Http\Response
      */
-    public function show(Book $book)
+    public function show($bookId)
     {
+        $book = $this->checkPermission($bookId, 'update');
+
         return view('codebook::books.show', compact('book'));
     }
 
@@ -100,11 +107,13 @@ class BooksController extends Controller
      * Show the form for editing the specified resource.
      * @Permission\Action(name="update", description="Atualizar livros")
      *
-     * @param \Modules\CodeBook\Models\Book $book
+     * @param integer $bookId
      * @return \Illuminate\Http\Response
      */
-    public function edit(Book $book)
+    public function edit($bookId)
     {
+        $book = $this->checkPermission($bookId, 'update');
+
         $this->categoryRepository->withTrashed();
         $categories = $this->categoryRepository->listsWithMutators('name_trashed', 'id');
 
@@ -116,12 +125,14 @@ class BooksController extends Controller
      * @Permission\Action(name="update", description="Atualizar livros")
      *
      * @param BookRequest $request
-     * @param \Modules\CodeBook\Models\Book $book
+     * @param integer $bookId
      * @return \Illuminate\Http\Response
      */
-    public function update(BookRequest $request, Book $book)
+    public function update(BookRequest $request, $bookId)
     {
-        $this->bookRepository->update($request->all(), $book->id);
+        $this->checkPermission($bookId, 'update');
+
+        $this->bookRepository->update($request->all(), $bookId);
 
         return redirect()->to($request->get('_previous'))->with('success', 'Livro alterado com sucesso.');
     }
@@ -130,14 +141,33 @@ class BooksController extends Controller
      * Remove the specified resource from storage.
      * @Permission\Action(name="destroy", description="Excluir livros")
      *
-     * @param BookRequest $request
-     * @param \Modules\CodeBook\Models\Book $book
+     * @param Request $request
+     * @param integer $bookId
      * @return \Illuminate\Http\Response
      */
-    public function destroy(BookRequest $request, Book $book)
+    public function destroy(Request $request, $bookId)
     {
-        $book->delete();
+        $this->checkPermission($bookId, 'delete');
+
+        $this->bookRepository->delete($bookId);
 
         return redirect()->to($request->get('_previous'))->with('success', 'Livro excluído com sucesso');
+    }
+
+    /**
+     * @param integer $bookId
+     * @param string $ability | view, update, delete
+     * @return Book
+     * @throws AuthorizationException
+     */
+    private function checkPermission($bookId, $ability)
+    {
+        $book = $this->bookRepository->find($bookId);
+
+        if (\Auth::user()->cannot($ability, $book)) {
+            throw new AuthorizationException('Usuário não autorizado');
+        }
+
+        return $book;
     }
 }
