@@ -12,23 +12,33 @@ if (!function_exists('navbar')) {
         $navbar = Navbar::withBrand(config('app.name'), url('/home'));
 
         if (Auth::check()) {
-            $links = Navigation::links([
-                [
-                    'Segurança',
-                    [
-                        ['link' => route('users.index'), 'title' => 'Usuários'],
-                        ['link' => route('roles.index'), 'title' => 'Papéis'],
-                    ],
-                ],
-                ['link' => route('categories.index'), 'title' => 'Categorias'],
-                ['link' => route('books.index'), 'title' => 'Livros'],
-                [
-                    'Lixeira',
-                    [
-                        ['link' => route('trashed.books.index'), 'title' => 'Livros'],
-                    ],
-                ],
-            ]);
+            $links = [];
+
+            if (Auth::user()->can('codeuser-users/list')) {
+                $links[] = ['Segurança', [['link' => route('users.index'), 'title' => 'Usuários']]];
+            }
+
+            if (Auth::user()->can('codeuser-roles/list')) {
+                if (count($links)) {
+                    $links[0][1][] = ['link' => route('roles.index'), 'title' => 'Papéis'];
+                } else {
+                    $links[] = ['Segurança', [['link' => route('roles.index'), 'title' => 'Papéis']]];
+                }
+            }
+
+            if (Auth::user()->can('codebook-categories/list')) {
+                $links[] = ['link' => route('categories.index'), 'title' => 'Categorias'];
+            }
+
+            if (Auth::user()->can('codebook-books/list')) {
+                $links[] = ['link' => route('books.index'), 'title' => 'Livros'];
+            }
+
+            if (Auth::user()->can('codebook-books-trashed/list')) {
+                $links[] = ['Lixeira', [['link' => route('trashed.books.index'), 'title' => 'Livros']]];
+            }
+
+            $links = Navigation::links($links);
 
             $logout = Navigation::links([
                 [
