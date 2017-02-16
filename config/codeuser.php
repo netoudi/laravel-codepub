@@ -13,6 +13,7 @@ return [
         'role_admin' => env('ROLE_ADMIN', 'Admin'),
         'controllers_annotations' => [
             base_path('modules/CodeUser/Http/Controllers'),
+            base_path('modules/CodeBook/Http/Controllers'),
         ],
     ],
 ];
