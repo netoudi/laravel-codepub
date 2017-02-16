@@ -46,7 +46,7 @@
                                     <tr>
                                         <td>{{ $book->id }}</td>
                                         <td>{{ str_limit($book->title, 50) }}</td>
-                                        <td>{{ $book->user->name }}</td>
+                                        <td>{{ $book->user->name_trashed }}</td>
                                         <td>{{ $book->price }}</td>
                                         <td nowrap="nowrap">
                                             <a href="{{ route('books.show', ['id' => $book->id]) }}"

@@ -38,6 +38,11 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    public function getNameTrashedAttribute()
+    {
+        return $this->trashed() ? "{$this->name} (Inativo)" : $this->name;
+    }
+
     public function formRolesAttribute()
     {
         return $this->roles->pluck('id')->all();

@@ -28,7 +28,7 @@
 
                                 <hr>
                                 <dt><strong>Autor:</strong></dt>
-                                <dd>{{ $book->user->name }}</dd>
+                                <dd>{{ $book->user->name_trashed }}</dd>
 
                                 <hr>
                                 <dt><strong>Preço:</strong></dt>
