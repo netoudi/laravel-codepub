@@ -7,9 +7,11 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         Categorias
-                        <a href="{{ route('categories.create') }}" class="btn btn-primary btn-xs pull-right">
-                            Nova Categoria
-                        </a>
+                        @can('codebook-categories/store')
+                            <a href="{{ route('categories.create') }}" class="btn btn-primary btn-xs pull-right">
+                                Nova Categoria
+                            </a>
+                        @endcan
                     </div>
 
                     <div class="panel-body">
@@ -45,10 +47,14 @@
                                         <td nowrap="nowrap">
                                             <a href="{{ route('categories.show', ['id' => $category->id]) }}"
                                                class="btn btn-primary btn-xs">Vizualizar</a>
-                                            <a href="{{ route('categories.edit', ['id' => $category->id]) }}"
-                                               class="btn btn-primary btn-xs">Editar</a>
-                                            <a href="{{ route('categories.destroy', ['id' => $category->id]) }}"
-                                               class="btn btn-danger btn-xs js-destroy">Deletar</a>
+                                            @can('codebook-categories/update')
+                                                <a href="{{ route('categories.edit', ['id' => $category->id]) }}"
+                                                   class="btn btn-primary btn-xs">Editar</a>
+                                            @endcan
+                                            @can('codebook-categories/destroy')
+                                                <a href="{{ route('categories.destroy', ['id' => $category->id]) }}"
+                                                   class="btn btn-danger btn-xs js-destroy">Deletar</a>
+                                            @endcan
                                         </td>
                                     </tr>
                                 @empty

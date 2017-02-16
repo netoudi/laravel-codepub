@@ -7,9 +7,11 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         Livros
-                        <a href="{{ route('books.create') }}" class="btn btn-primary btn-xs pull-right">
-                            Novo Livro
-                        </a>
+                        @can('codebook-books/store')
+                            <a href="{{ route('books.create') }}" class="btn btn-primary btn-xs pull-right">
+                                Novo Livro
+                            </a>
+                        @endcan
                     </div>
 
                     <div class="panel-body">
@@ -49,10 +51,14 @@
                                         <td nowrap="nowrap">
                                             <a href="{{ route('books.show', ['id' => $book->id]) }}"
                                                class="btn btn-primary btn-xs">Vizualizar</a>
-                                            <a href="{{ route('books.edit', ['id' => $book->id]) }}"
-                                               class="btn btn-primary btn-xs">Editar</a>
-                                            <a href="{{ route('books.destroy', ['id' => $book->id]) }}"
-                                               class="btn btn-danger btn-xs js-destroy">Deletar</a>
+                                            @can('codebook-books/update')
+                                                <a href="{{ route('books.edit', ['id' => $book->id]) }}"
+                                                   class="btn btn-primary btn-xs">Editar</a>
+                                            @endcan
+                                            @can('codebook-books/destroy')
+                                                <a href="{{ route('books.destroy', ['id' => $book->id]) }}"
+                                                   class="btn btn-danger btn-xs js-destroy">Deletar</a>
+                                            @endcan
                                         </td>
                                     </tr>
                                 @empty

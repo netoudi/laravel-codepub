@@ -46,10 +46,14 @@
                                         <td nowrap="nowrap">
                                             <a href="{{ route('trashed.books.show', ['id' => $book->id]) }}"
                                                class="btn btn-primary btn-xs">Vizualizar</a>
-                                            <a href="{{ route('trashed.books.update', ['id' => $book->id]) }}"
-                                               class="btn btn-primary btn-xs js-restore">Restaurar</a>
-                                            <a href="{{ route('trashed.books.destroy', ['id' => $book->id]) }}"
-                                               class="btn btn-danger btn-xs js-destroy-trashed">Deletar</a>
+                                            @can('codebook-books-trashed/update')
+                                                <a href="{{ route('trashed.books.update', ['id' => $book->id]) }}"
+                                                   class="btn btn-primary btn-xs js-restore">Restaurar</a>
+                                            @endcan
+                                            @can('codebook-books-trashed/destroy')
+                                                <a href="{{ route('trashed.books.destroy', ['id' => $book->id]) }}"
+                                                   class="btn btn-danger btn-xs js-destroy-trashed">Deletar</a>
+                                            @endcan
                                         </td>
                                     </tr>
                                 @empty

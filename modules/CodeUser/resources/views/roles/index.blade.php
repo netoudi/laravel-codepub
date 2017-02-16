@@ -7,9 +7,11 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         Papéis
-                        <a href="{{ route('roles.create') }}" class="btn btn-primary btn-xs pull-right">
-                            Novo Papel
-                        </a>
+                        @can('codeuser-roles/store')
+                            <a href="{{ route('roles.create') }}" class="btn btn-primary btn-xs pull-right">
+                                Novo Papel
+                            </a>
+                        @endcan
                     </div>
 
                     <div class="panel-body">
@@ -45,18 +47,34 @@
                                         <td>{{ $role->name }}</td>
                                         <td>{{ $role->description }}</td>
                                         <td nowrap="nowrap">
-                                            <a href="{{ route('roles.permissions.edit', ['id' => $role->id]) }}"
-                                               class="btn btn-warning btn-xs">Permissões</a>
+                                            @can('codeuser-roles/permissions')
+                                                <a href="{{ route('roles.permissions.edit', ['id' => $role->id]) }}"
+                                                   class="btn btn-warning btn-xs">Permissões</a>
+                                            @endcan
                                             <a href="{{ route('roles.show', ['id' => $role->id]) }}"
                                                class="btn btn-primary btn-xs">Vizualizar</a>
                                             @if($role->name == config('codeuser.acl.role_admin'))
-                                                <a class="btn btn-danger btn-xs" title="Não é possível editar o papel padrão" data-toggle="tooltip" data-placement="top" disabled="disabled">Editar</a>
-                                                <a class="btn btn-danger btn-xs" title="Não é possível deletar o papel padrão" data-toggle="tooltip" data-placement="top" disabled="disabled">Deletar</a>
+                                                @can('codeuser-roles/update')
+                                                    <a class="btn btn-danger btn-xs"
+                                                       title="Não é possível editar o papel padrão"
+                                                       data-toggle="tooltip"
+                                                       data-placement="top" disabled="disabled">Editar</a>
+                                                @endcan
+                                                @can('codeuser-roles/destroy')
+                                                    <a class="btn btn-danger btn-xs"
+                                                       title="Não é possível deletar o papel padrão"
+                                                       data-toggle="tooltip"
+                                                       data-placement="top" disabled="disabled">Deletar</a>
+                                                @endcan
                                             @else
-                                                <a href="{{ route('roles.edit', ['id' => $role->id]) }}"
-                                                   class="btn btn-primary btn-xs">Editar</a>
-                                                <a href="{{ route('roles.destroy', ['id' => $role->id]) }}"
-                                                   class="btn btn-danger btn-xs js-destroy">Deletar</a>
+                                                @can('codeuser-roles/update')
+                                                    <a href="{{ route('roles.edit', ['id' => $role->id]) }}"
+                                                       class="btn btn-primary btn-xs">Editar</a>
+                                                @endcan
+                                                @can('codeuser-roles/destroy')
+                                                    <a href="{{ route('roles.destroy', ['id' => $role->id]) }}"
+                                                       class="btn btn-danger btn-xs js-destroy">Deletar</a>
+                                                @endcan
                                             @endif
                                         </td>
                                     </tr>

@@ -7,9 +7,11 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         Usuários
-                        <a href="{{ route('users.create') }}" class="btn btn-primary btn-xs pull-right">
-                            Novo Usuário
-                        </a>
+                        @can('codeuser-users/store')
+                            <a href="{{ route('users.create') }}" class="btn btn-primary btn-xs pull-right">
+                                Novo Usuário
+                            </a>
+                        @endcan
                     </div>
 
                     <div class="panel-body">
@@ -49,13 +51,21 @@
                                         <td nowrap="nowrap">
                                             <a href="{{ route('users.show', ['id' => $user->id]) }}"
                                                class="btn btn-primary btn-xs">Vizualizar</a>
-                                            <a href="{{ route('users.edit', ['id' => $user->id]) }}"
-                                               class="btn btn-primary btn-xs">Editar</a>
+                                            @can('codeuser-users/update')
+                                                <a href="{{ route('users.edit', ['id' => $user->id]) }}"
+                                                   class="btn btn-primary btn-xs">Editar</a>
+                                            @endcan
                                             @if(Auth::user()->id == $user->id)
-                                                <a class="btn btn-danger btn-xs" title="Não é possível excluir o próprio usuário" data-toggle="tooltip" data-placement="top" disabled="disabled">Deletar</a>
+                                                @can('codeuser-users/destroy')
+                                                    <a class="btn btn-danger btn-xs"
+                                                       title="Não é possível excluir o próprio usuário"
+                                                       data-toggle="tooltip" data-placement="top" disabled="disabled">Deletar</a>
+                                                @endcan
                                             @else
-                                                <a href="{{ route('users.destroy', ['id' => $user->id]) }}"
-                                                   class="btn btn-danger btn-xs js-destroy">Deletar</a>
+                                                @can('codeuser-users/destroy')
+                                                    <a href="{{ route('users.destroy', ['id' => $user->id]) }}"
+                                                       class="btn btn-danger btn-xs js-destroy">Deletar</a>
+                                                @endcan
                                             @endif
                                         </td>
                                     </tr>
