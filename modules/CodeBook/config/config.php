@@ -11,5 +11,8 @@ return [
 
     'acl' => [
         'role_author' => env('ROLE_AUTHOR', 'Author'),
+        'permissions' => [
+            'book_manage_all' => 'codebook-books/manage_all',
+        ],
     ],
 ];
