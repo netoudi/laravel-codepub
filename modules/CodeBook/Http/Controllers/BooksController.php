@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Modules\CodeBook\Criteria\FindByAuthorCriteria;
 use Modules\CodeBook\Http\Requests\BookRequest;
+use Modules\CodeBook\Models\Book;
 use Modules\CodeBook\Repositories\BookRepository;
 use Modules\CodeBook\Repositories\CategoryRepository;
 use Modules\CodeUser\Annotations\Mapping as Permission;
@@ -89,13 +90,11 @@ class BooksController extends Controller
      * Display the specified resource.
      * @Permission\Action(name="list", description="Ver listagem de livros")
      *
-     * @param integer $bookId
+     * @param Book $book
      * @return \Illuminate\Http\Response
      */
-    public function show($bookId)
+    public function show(Book $book)
     {
-        $book = $this->bookRepository->find($bookId);
-
         return view('codebook::books.show', compact('book'));
     }
 
@@ -103,12 +102,11 @@ class BooksController extends Controller
      * Show the form for editing the specified resource.
      * @Permission\Action(name="update", description="Atualizar livros")
      *
-     * @param integer $bookId
+     * @param Book $book
      * @return \Illuminate\Http\Response
      */
-    public function edit($bookId)
+    public function edit(Book $book)
     {
-        $book = $this->bookRepository->find($bookId);
         $this->categoryRepository->withTrashed();
         $categories = $this->categoryRepository->listsWithMutators('name_trashed', 'id');
 
@@ -120,12 +118,12 @@ class BooksController extends Controller
      * @Permission\Action(name="update", description="Atualizar livros")
      *
      * @param BookRequest $request
-     * @param integer $bookId
+     * @param Book $book
      * @return \Illuminate\Http\Response
      */
-    public function update(BookRequest $request, $bookId)
+    public function update(BookRequest $request, Book $book)
     {
-        $this->bookRepository->update($request->all(), $bookId);
+        $this->bookRepository->update($request->except('user_id'), $book->id);
 
         return redirect()->to($request->get('_previous'))->with('success', 'Livro alterado com sucesso.');
     }
@@ -135,12 +133,12 @@ class BooksController extends Controller
      * @Permission\Action(name="destroy", description="Excluir livros")
      *
      * @param Request $request
-     * @param integer $bookId
+     * @param Book $book
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, $bookId)
+    public function destroy(Request $request, Book $book)
     {
-        $this->bookRepository->delete($bookId);
+        $this->bookRepository->delete($book->id);
 
         return redirect()->to($request->get('_previous'))->with('success', 'Livro excluído com sucesso');
     }

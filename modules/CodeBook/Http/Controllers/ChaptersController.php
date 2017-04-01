@@ -3,10 +3,9 @@
 namespace Modules\CodeBook\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Modules\CodeBook\Criteria\FindByAuthorCriteria;
 use Modules\CodeBook\Criteria\FindByBookCriteria;
 use Modules\CodeBook\Http\Requests\ChapterRequest;
-use Modules\CodeBook\Repositories\BookRepository;
+use Modules\CodeBook\Models\Book;
 use Modules\CodeBook\Repositories\ChapterRepository;
 use Modules\CodeUser\Annotations\Mapping as Permission;
 
@@ -24,21 +23,13 @@ class ChaptersController extends Controller
     private $chapterRepository;
 
     /**
-     * @var BookRepository
-     */
-    private $bookRepository;
-
-    /**
      * ChaptersController constructor.
      *
      * @param ChapterRepository $chapterRepository
-     * @param BookRepository $bookRepository
      */
-    public function __construct(ChapterRepository $chapterRepository, BookRepository $bookRepository)
+    public function __construct(ChapterRepository $chapterRepository)
     {
         $this->chapterRepository = $chapterRepository;
-        $this->bookRepository = $bookRepository;
-        $this->bookRepository->pushCriteria(new FindByAuthorCriteria());
     }
 
     /**
@@ -46,14 +37,14 @@ class ChaptersController extends Controller
      * @Permission\Action(name="list", description="Ver listagem de capítulos")
      *
      * @param Request $request
-     * @param $bookId
+     * @param Book $book
      * @return \Illuminate\Http\Response
+     * @internal param $bookId
      */
-    public function index(Request $request, $bookId)
+    public function index(Request $request, Book $book)
     {
-        $book = $this->bookRepository->find($bookId);
         $search = $request->get('search');
-        $this->chapterRepository->pushCriteria(new FindByBookCriteria($bookId));
+        $this->chapterRepository->pushCriteria(new FindByBookCriteria($book->id));
         $chapters = $this->chapterRepository->paginate(10);
 
         return view('codebook::chapters.index', compact('book', 'chapters', 'search'));
@@ -63,13 +54,12 @@ class ChaptersController extends Controller
      * Show the form for creating a new resource.
      * @Permission\Action(name="store", description="Criar capítulos")
      *
-     * @param $bookId
+     * @param Book $book
      * @return \Illuminate\Http\Response
+     * @internal param $bookId
      */
-    public function create($bookId)
+    public function create(Book $book)
     {
-        $book = $this->bookRepository->find($bookId);
-
         return view('codebook::chapters.form', compact('book'));
     }
 
@@ -78,15 +68,14 @@ class ChaptersController extends Controller
      * @Permission\Action(name="store", description="Criar capítulos")
      *
      * @param ChapterRequest $request
-     * @param $bookId
+     * @param Book $book
      * @return \Illuminate\Http\Response
      */
-    public function store(ChapterRequest $request, $bookId)
+    public function store(ChapterRequest $request, Book $book)
     {
-        $book = $this->bookRepository->find($bookId);
         $data = $request->all();
         $data['book_id'] = $book->id;
-        $this->chapterRepository->pushCriteria(new FindByBookCriteria($bookId));
+        $this->chapterRepository->pushCriteria(new FindByBookCriteria($book->id));
         $this->chapterRepository->create($data);
 
         return redirect()->to($request->get('_previous'))->with('success', 'Capítulo cadastrado com sucesso.');
@@ -96,14 +85,13 @@ class ChaptersController extends Controller
      * Display the specified resource.
      * @Permission\Action(name="list", description="Ver listagem de capítulos")
      *
-     * @param integer $bookId
+     * @param Book $book
      * @param $chapterId
      * @return \Illuminate\Http\Response
      */
-    public function show($bookId, $chapterId)
+    public function show(Book $book, $chapterId)
     {
-        $book = $this->bookRepository->find($bookId);
-        $this->chapterRepository->pushCriteria(new FindByBookCriteria($bookId));
+        $this->chapterRepository->pushCriteria(new FindByBookCriteria($book->id));
         $chapter = $this->chapterRepository->find($chapterId);
 
         return view('codebook::chapters.show', compact('book', 'chapter'));
@@ -113,14 +101,13 @@ class ChaptersController extends Controller
      * Show the form for editing the specified resource.
      * @Permission\Action(name="update", description="Atualizar capítulos")
      *
-     * @param integer $bookId
+     * @param Book $book
      * @param integer $chapterId
      * @return \Illuminate\Http\Response
      */
-    public function edit($bookId, $chapterId)
+    public function edit(Book $book, $chapterId)
     {
-        $book = $this->bookRepository->find($bookId);
-        $this->chapterRepository->pushCriteria(new FindByBookCriteria($bookId));
+        $this->chapterRepository->pushCriteria(new FindByBookCriteria($book->id));
         $chapter = $this->chapterRepository->find($chapterId);
 
         return view('codebook::chapters.form', compact('book', 'chapter'));
@@ -131,17 +118,14 @@ class ChaptersController extends Controller
      * @Permission\Action(name="update", description="Atualizar capítulos")
      *
      * @param ChapterRequest $request
-     * @param integer $bookId
+     * @param Book $book
      * @param $chapterId
      * @return \Illuminate\Http\Response
      */
-    public function update(ChapterRequest $request, $bookId, $chapterId)
+    public function update(ChapterRequest $request, Book $book, $chapterId)
     {
-        $book = $this->bookRepository->find($bookId);
-        $data = $request->all();
-        $data['book_id'] = $book->id;
-        $this->chapterRepository->pushCriteria(new FindByBookCriteria($bookId));
-        $this->chapterRepository->update($data, $chapterId);
+        $this->chapterRepository->pushCriteria(new FindByBookCriteria($book->id));
+        $this->chapterRepository->update($request->except('book_id'), $chapterId);
 
         return redirect()->to($request->get('_previous'))->with('success', 'Capítulo alterado com sucesso . ');
     }
@@ -151,13 +135,13 @@ class ChaptersController extends Controller
      * @Permission\Action(name="destroy", description="Excluir capítulos")
      *
      * @param Request $request
-     * @param integer $bookId
+     * @param Book $book
      * @param $chapterId
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, $bookId, $chapterId)
+    public function destroy(Request $request, Book $book, $chapterId)
     {
-        $this->chapterRepository->pushCriteria(new FindByBookCriteria($bookId));
+        $this->chapterRepository->pushCriteria(new FindByBookCriteria($book->id));
         $this->chapterRepository->delete($chapterId);
 
         return redirect()->to($request->get('_previous'))->with('success', 'Capítulo excluído com sucesso');

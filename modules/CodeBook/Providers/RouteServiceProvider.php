@@ -4,6 +4,8 @@ namespace Modules\CodeBook\Providers;
 
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Routing\Router;
+use Modules\CodeBook\Criteria\FindByAuthorCriteria;
+use Modules\CodeBook\Repositories\BookRepository;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -40,6 +42,18 @@ class RouteServiceProvider extends ServiceProvider
             'namespace' => $this->rootUrlNamespace,
         ], function () {
             require __DIR__ . '/../Http/routes.php';
+        });
+    }
+
+    public function boot()
+    {
+        parent::boot();
+
+        \Route::bind('book', function ($value) {
+            $bookRepository = app(BookRepository::class);
+            $bookRepository->pushCriteria(new FindByAuthorCriteria());
+
+            return $bookRepository->find($value);
         });
     }
 }
