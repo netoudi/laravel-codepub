@@ -32,7 +32,7 @@
 
                         {!! Html::openFormGroup('order', $errors) !!}
                         {!! Form::label('order', 'Ordem:', ['class' => 'control-label']) !!}
-                        {!! Form::text('order', null, ['class' => 'form-control']) !!}
+                        {!! Form::number('order', null, ['class' => 'form-control']) !!}
                         {!! Form::error('order', $errors) !!}
                         {!! Html::closeFormGroup() !!}
 

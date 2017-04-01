@@ -4,6 +4,7 @@ namespace Modules\CodeBook\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Modules\CodeBook\Criteria\FindByBookCriteria;
+use Modules\CodeBook\Criteria\OrderByOrderCriteria;
 use Modules\CodeBook\Http\Requests\ChapterRequest;
 use Modules\CodeBook\Models\Book;
 use Modules\CodeBook\Repositories\ChapterRepository;
@@ -45,6 +46,7 @@ class ChaptersController extends Controller
     {
         $search = $request->get('search');
         $this->chapterRepository->pushCriteria(new FindByBookCriteria($book->id));
+        $this->chapterRepository->pushCriteria(new OrderByOrderCriteria());
         $chapters = $this->chapterRepository->paginate(10);
 
         return view('codebook::chapters.index', compact('book', 'chapters', 'search'));
