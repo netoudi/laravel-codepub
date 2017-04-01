@@ -155,6 +155,7 @@ class CodeUserServiceProvider extends ServiceProvider
 
         $loader = \Illuminate\Foundation\AliasLoader::getInstance();
         $loader->alias('PermissionReader', \Modules\CodeUser\Facades\PermissionReader::class);
+        $loader->alias('NavbarAuthorization', \Modules\CodeUser\Facades\NavbarAuthorization::class);
     }
 
     protected function registerAnnotations()
