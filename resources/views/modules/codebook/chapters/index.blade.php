@@ -6,16 +6,20 @@
             <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        Livros
-                        @can('codebook-books/store')
-                            <a href="{{ route('books.create') }}" class="btn btn-primary btn-xs pull-right">
-                                Novo Livro
+                        Capítulos de <strong>{{ $book->title }}</strong>
+                        @can('codebook-chapters/store')
+                            <a href="{{ route('chapters.create', ['book' => $book->id]) }}"
+                               class="btn btn-primary btn-xs pull-right">
+                                Novo Capítulo
                             </a>
                         @endcan
+                        <a href="{{ route('books.index') }}" class="btn btn-primary btn-xs pull-right">
+                            &laquo; Voltar
+                        </a>
                     </div>
 
                     <div class="panel-body">
-                        {!! Form::model(compact('search'), ['method' => 'GET', 'route' => 'books.index', 'class' => 'form-inline text-right']) !!}
+                        {!! Form::model(compact('search'), ['method' => 'GET', 'route' => ['chapters.index', $book->id], 'class' => 'form-inline text-right']) !!}
                         <div class="form-group">
                             <div class="input-group">
                                 {!! Form::text('search', null, ['class' => 'form-control input-sm', 'placeholder' => 'O que você deseja buscar?']) !!}
@@ -35,45 +39,41 @@
                                 <thead>
                                 <tr>
                                     <th width="5%">Id</th>
-                                    <th>Título</th>
-                                    <th>Autor</th>
-                                    <th>Preço</th>
+                                    <th>Nome</th>
+                                    <th>Conteúdo</th>
+                                    <th width="10%">Ordem</th>
                                     <th width="5%">Ações</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @forelse($books as $book)
+                                @forelse($chapters as $chapter)
                                     <tr>
-                                        <td>{{ $book->id }}</td>
-                                        <td>{{ str_limit($book->title, 50) }}</td>
-                                        <td>{{ $book->user->name_trashed }}</td>
-                                        <td>{{ $book->price }}</td>
+                                        <td>{{ $chapter->id }}</td>
+                                        <td>{{ str_limit($chapter->name, 30) }}</td>
+                                        <td>{{ str_limit($chapter->content, 30) }}</td>
+                                        <td>{{ $chapter->order }}</td>
                                         <td nowrap="nowrap">
-                                            @can('codebook-chapters/list')
-                                                <a href="{{ route('chapters.index', ['book' => $book->id]) }}"
-                                                   class="btn btn-warning btn-xs">Capítulos</a>
-                                            @endcan
-                                            <a href="{{ route('books.show', ['id' => $book->id]) }}"
+                                            <a href="{{ route('chapters.show', ['book' => $chapter->book_id, 'chapter' => $chapter->id]) }}"
                                                class="btn btn-primary btn-xs">Vizualizar</a>
-                                            @can('codebook-books/update')
-                                                <a href="{{ route('books.edit', ['id' => $book->id]) }}"
+                                            @can('codebook-chapters/update')
+                                                <a href="{{ route('chapters.edit', ['book' => $chapter->book_id, 'chapter' => $chapter->id]) }}"
                                                    class="btn btn-primary btn-xs">Editar</a>
                                             @endcan
-                                            @can('codebook-books/destroy')
-                                                <a href="{{ route('books.destroy', ['id' => $book->id]) }}"
+                                            @can('codebook-chapters/destroy')
+                                                <a href="{{ route('chapters.destroy', ['book' => $chapter->book_id, 'chapter' => $chapter->id]) }}"
                                                    class="btn btn-danger btn-xs js-destroy">Deletar</a>
                                             @endcan
                                         </td>
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="3">Nenhum livro cadastrado.</td>
+                                        <td colspan="3">Nenhum capítulo cadastrado.</td>
                                     </tr>
                                 @endforelse
                                 </tbody>
                             </table>
                             <div class="text-center">
-                                {{ $books->links() }}
+                                {{ $chapters->links() }}
                             </div>
                         </div>
                     </div>

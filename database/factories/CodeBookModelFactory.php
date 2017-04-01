@@ -26,3 +26,10 @@ $factory->define(\Modules\CodeBook\Models\Book::class, function (Faker\Generator
         'price' => $faker->randomFloat(null, 10, 100),
     ];
 });
+
+$factory->define(\Modules\CodeBook\Models\Chapter::class, function (Faker\Generator $faker) {
+    return [
+        'name' => $faker->sentence(2),
+        'content' => $faker->paragraph(10),
+    ];
+});

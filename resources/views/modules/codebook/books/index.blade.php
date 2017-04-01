@@ -49,6 +49,10 @@
                                         <td>{{ $book->user->name_trashed }}</td>
                                         <td>{{ $book->price }}</td>
                                         <td nowrap="nowrap">
+                                            @can('codebook-chapters/list')
+                                                <a href="{{ route('chapters.index', ['book' => $book->id]) }}"
+                                                   class="btn btn-warning btn-xs">Capítulos</a>
+                                            @endcan
                                             <a href="{{ route('books.show', ['id' => $book->id]) }}"
                                                class="btn btn-primary btn-xs">Vizualizar</a>
                                             @can('codebook-books/update')
