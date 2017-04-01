@@ -118,6 +118,9 @@ return [
         'categories_*' => 'categoria :num',
         'roles.*' => 'papel',
         'permissions.*' => 'permissão',
+        'order' => 'ordem',
+        'content' => 'conteúdo',
+        'percent_complete' => 'concluído',
     ],
 
 ];

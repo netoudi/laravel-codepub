@@ -30,6 +30,10 @@ class BookRequest extends FormRequest
             'price' => 'required|numeric',
             'categories' => 'required|array',
             'categories.*' => 'exists:categories,id',
+            'dedication' => 'required',
+            'description' => 'required',
+            'website' => 'required|max:255|url',
+            'percent_complete' => 'required|integer|min:0|max:100',
         ];
     }
 

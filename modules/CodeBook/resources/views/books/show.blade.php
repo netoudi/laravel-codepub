@@ -43,6 +43,30 @@
                                         @endforeach
                                     </ul>
                                 </dd>
+
+                                <hr>
+                                <dt><strong>Preço:</strong></dt>
+                                <dd>{{ $book->price }}</dd>
+
+                                <hr>
+                                <dt><strong>Dedicatória:</strong></dt>
+                                <dd>{{ $book->dedication }}</dd>
+
+                                <hr>
+                                <dt><strong>Descrição:</strong></dt>
+                                <dd>{{ $book->description }}</dd>
+
+                                <hr>
+                                <dt><strong>Website:</strong></dt>
+                                <dd>{{ $book->website }}</dd>
+
+                                <hr>
+                                <dt><strong>Concluído (%):</strong></dt>
+                                <dd>{{ $book->percent_complete }}</dd>
+
+                                <hr>
+                                <dt><strong>Publicado?</strong></dt>
+                                <dd>{{ $book->published ? 'Sim' : 'Não' }}</dd>
                             </dl>
                         </div>
                     </div>

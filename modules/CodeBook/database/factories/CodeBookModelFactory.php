@@ -24,6 +24,11 @@ $factory->define(\Modules\CodeBook\Models\Book::class, function (Faker\Generator
         'title' => $faker->unique()->sentence,
         'subtitle' => $faker->sentence(5, true),
         'price' => $faker->randomFloat(null, 10, 100),
+        'dedication' => $faker->sentence,
+        'description' => $faker->paragraph,
+        'website' => $faker->url,
+        'percent_complete' => rand(1, 100),
+        'published' => $faker->boolean,
     ];
 });
 

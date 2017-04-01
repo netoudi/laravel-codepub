@@ -20,6 +20,11 @@ class Book extends Model
         'title',
         'subtitle',
         'price',
+        'dedication',
+        'description',
+        'website',
+        'percent_complete',
+        'published',
     ];
 
     public function formCategoriesAttribute()
