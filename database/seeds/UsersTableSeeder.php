@@ -13,16 +13,6 @@ class UsersTableSeeder extends Seeder
     {
         \Artisan::call('codeuser:make-permissions');
 
-        factory(\Modules\CodeUser\Models\User::class, 1)->create([
-            'name' => 'Author One',
-            'email' => 'author1@codepub.com',
-        ]);
-
-        factory(\Modules\CodeUser\Models\User::class, 1)->create([
-            'name' => 'Author Two',
-            'email' => 'author2@codepub.com',
-        ]);
-
-        factory(\Modules\CodeUser\Models\User::class, 12)->create();
+        factory(\Modules\CodeUser\Models\User::class, 20)->create();
     }
 }
