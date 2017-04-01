@@ -84,5 +84,6 @@
             $(form).submit();
         }
     </script>
+    @stack('scripts')
 </body>
 </html>

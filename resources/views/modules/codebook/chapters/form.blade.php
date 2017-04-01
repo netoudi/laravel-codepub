@@ -51,3 +51,5 @@
         </div>
     </div>
 @endsection
+
+@include('codebook::chapters._ckeditor')

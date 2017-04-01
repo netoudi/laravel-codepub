@@ -26,6 +26,7 @@ class CodeBookServiceProvider extends ServiceProvider
         $this->registerMigrations();
         $this->registerSeeds();
         $this->registerFactories();
+        $this->publishAssets();
     }
 
     /**
@@ -126,6 +127,18 @@ class CodeBookServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__ . '/../database/factories' => database_path('factories'),
         ], 'factories');
+    }
+
+    /**
+     * Publish assets.
+     *
+     * @return void
+     */
+    public function publishAssets()
+    {
+        $this->publishes([
+            __DIR__ . '/../resources/assets/js' => public_path('js'),
+        ], 'assets');
     }
 
     /**
