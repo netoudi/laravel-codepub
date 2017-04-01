@@ -10,7 +10,7 @@ use Prettus\Repository\Contracts\RepositoryInterface;
  *
  * @package Modules\CodeUser\Criteria
  */
-class FindBooksAuthorCriteria implements CriteriaInterface
+class FindByAuthorCriteria implements CriteriaInterface
 {
     /**
      * Apply criteria in query repository
@@ -22,6 +22,10 @@ class FindBooksAuthorCriteria implements CriteriaInterface
      */
     public function apply($model, RepositoryInterface $repository)
     {
-        return $model->where('user_id', \Auth::user()->id);
+        if (!\Auth::user()->isAdmin()) {
+            return $model->where('user_id', \Auth::user()->id);
+        }
+
+        return $model;
     }
 }
