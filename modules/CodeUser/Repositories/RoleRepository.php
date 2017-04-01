@@ -13,5 +13,5 @@ use Prettus\Repository\Contracts\RepositoryInterface;
  */
 interface RoleRepository extends RepositoryInterface, RepositoryCriteriaInterface, CriteriaTrashedInterface, RepositoryRestoreInterface
 {
-    //
+    public function updatePermissions(array $permissions, $roleId);
 }

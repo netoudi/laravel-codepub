@@ -21,6 +21,18 @@ class RoleRepositoryEloquent extends BaseRepository implements RoleRepository
         'description' => 'like',
     ];
 
+    public function updatePermissions(array $permissions, $roleId)
+    {
+        $model = $this->find($roleId);
+        $model->permissions()->detach();
+
+        if (count($permissions)) {
+            $model->permissions()->sync($permissions);
+        }
+
+        return $model;
+    }
+
     /**
      * Specify Model class name
      *

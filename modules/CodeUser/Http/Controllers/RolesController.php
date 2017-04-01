@@ -161,11 +161,7 @@ class RolesController extends Controller
      */
     public function updatePermissions(PermissionRequest $request, Role $role)
     {
-        if ($request->get('permissions')) {
-            $role->permissions()->sync($request->get('permissions'));
-        } else {
-            $role->permissions()->sync([]);
-        }
+        $this->roleRepository->updatePermissions($request->get('permissions', []), $role->id);
 
         return redirect()->route('roles.index')->with('success', 'Permissões atualizadas com sucesso');
     }
