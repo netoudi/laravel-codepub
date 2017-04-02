@@ -19,22 +19,28 @@ $factory->define(\Modules\CodeBook\Models\Category::class, function (Faker\Gener
 });
 
 $factory->define(\Modules\CodeBook\Models\Book::class, function (Faker\Generator $faker) {
+    $repository = app(\Modules\CodeUser\Repositories\UserRepository::class);
+    /** @var \Illuminate\Database\Eloquent\Collection $authorId */
+    $authorId = $repository->all()->random()->id;
+
     return [
-        'user_id' => $faker->numberBetween(1, 15),
+        'user_id' => $authorId,
         'title' => $faker->unique()->sentence,
         'subtitle' => $faker->sentence(5, true),
-        'price' => $faker->randomFloat(null, 10, 100),
+        'price' => $faker->randomFloat(2, 10, 100),
         'dedication' => $faker->sentence,
         'description' => $faker->paragraph,
         'website' => $faker->url,
-        'percent_complete' => rand(1, 100),
+        'percent_complete' => rand(0, 100),
         'published' => $faker->boolean,
     ];
 });
 
 $factory->define(\Modules\CodeBook\Models\Chapter::class, function (Faker\Generator $faker) {
+    $faker->addProvider(new \Modules\CodeBook\Faker\ChapterFakerProvider($faker));
+
     return [
         'name' => $faker->sentence(2),
-        'content' => $faker->paragraph(10),
+        'content' => $faker->markdown(rand(2, 6)),
     ];
 });

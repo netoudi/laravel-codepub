@@ -48,7 +48,7 @@ book:
             toc:
                 deep:           2
                 elements:       ["chapter"]
-            two_sided:          true
+            two_sided:          false
 
         web:
             format:             html
