@@ -14,6 +14,7 @@ class BookCoverUpload
                 ->putFileAs($book->ebook_template, $cover, $book->cover_ebook_name);
 
         $this->makeCoverPdf($book);
+        $this->makeCoverKindle($book);
         $this->makeThumbnail($book);
     }
 
@@ -26,6 +27,15 @@ class BookCoverUpload
         $img = new \Imagick($book->cover_ebook_file);
         $img->setImageFormat('pdf');
         $img->writeImage($book->cover_pdf_file);
+    }
+
+    protected function makeCoverKindle(Book $book)
+    {
+        if (!is_dir($book->kindle_template_storage)) {
+            mkdir($book->kindle_template_storage, 0775, true);
+        }
+
+        copy($book->cover_ebook_file, $book->cover_kindle_file);
     }
 
     protected function makeThumbnail(Book $book)
