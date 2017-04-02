@@ -5,8 +5,10 @@ namespace Modules\CodeBook\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Modules\CodeBook\Criteria\FindByAuthorCriteria;
+use Modules\CodeBook\Http\Requests\BookCoverRequest;
 use Modules\CodeBook\Http\Requests\BookRequest;
 use Modules\CodeBook\Models\Book;
+use Modules\CodeBook\Pub\BookCoverUpload;
 use Modules\CodeBook\Repositories\BookRepository;
 use Modules\CodeBook\Repositories\CategoryRepository;
 use Modules\CodeUser\Annotations\Mapping as Permission;
@@ -143,5 +145,28 @@ class BooksController extends Controller
         $this->bookRepository->delete($book->id);
 
         return redirect()->to($request->get('_previous'))->with('success', 'Livro excluído com sucesso');
+    }
+
+    /**
+     * @Permission\Action(name="cover", description="Cover de livro")
+     * @param Book $book
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function coverForm(Book $book)
+    {
+        return view('codebook::books.cover', compact('book'));
+    }
+
+    /**
+     * @Permission\Action(name="cover", description="Cover de livro")
+     * @param BookCoverRequest $request
+     * @param Book $book
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function coverStore(BookCoverRequest $request, Book $book, BookCoverUpload $upload)
+    {
+        $upload->upload($book, $request->file('file'));
+
+        return redirect()->to($request->get('_previous'))->with('success', 'Cover adicionado com sucesso');
     }
 }

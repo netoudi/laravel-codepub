@@ -15,4 +15,8 @@ return [
             'book_manage_all' => 'codebook-books/manage_all',
         ],
     ],
+
+    'book_storage' => env('BOOK_STORAGE_DISK', 'book_local'),
+
+    'book_thumbs' => 'storage/books/thumbs',
 ];

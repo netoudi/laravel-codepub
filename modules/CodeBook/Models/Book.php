@@ -9,7 +9,7 @@ use Modules\CodeUser\Models\User;
 
 class Book extends Model
 {
-    use FormAccessible, SoftDeletes;
+    use FormAccessible, SoftDeletes, BookStorageTrait, BookThumbnailTrait;
 
     protected $dates = [
         'deleted_at',

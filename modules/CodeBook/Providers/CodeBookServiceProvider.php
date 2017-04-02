@@ -2,6 +2,7 @@
 
 namespace Modules\CodeBook\Providers;
 
+use Folklore\Image\ImageServiceProvider;
 use Illuminate\Support\ServiceProvider;
 
 class CodeBookServiceProvider extends ServiceProvider
@@ -39,6 +40,10 @@ class CodeBookServiceProvider extends ServiceProvider
         $this->app->register(AuthServiceProvider::class);
         $this->app->register(RouteServiceProvider::class);
         $this->app->register(RepositoryServiceProvider::class);
+        $this->app->register(ImageServiceProvider::class);
+
+        $loader = \Illuminate\Foundation\AliasLoader::getInstance();
+        $loader->alias('Image', \Folklore\Image\Facades\Image::class);
     }
 
     /**

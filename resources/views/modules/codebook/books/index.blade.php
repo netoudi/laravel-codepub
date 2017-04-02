@@ -53,6 +53,10 @@
                                                 <a href="{{ route('chapters.index', ['book' => $book->id]) }}"
                                                    class="btn btn-warning btn-xs">Capítulos</a>
                                             @endcan
+                                            @can('codebook-books/cover')
+                                                <a href="{{ route('books.cover.create', ['book' => $book->id]) }}"
+                                                   class="btn btn-success btn-xs">Cover</a>
+                                            @endcan
                                             <a href="{{ route('books.show', ['id' => $book->id]) }}"
                                                class="btn btn-primary btn-xs">Vizualizar</a>
                                             @can('codebook-books/update')

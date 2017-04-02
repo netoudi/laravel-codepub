@@ -6,7 +6,8 @@
             <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        {{ empty($chapter) ? 'Adicionar Capítulo' : 'Atualizar Capítulo' }} - <strong>{{ $book->title }}</strong>
+                        {{ empty($chapter) ? 'Adicionar Capítulo' : 'Atualizar Capítulo' }} -
+                        <strong>{{ $book->title }}</strong>
                     </div>
 
                     <div class="panel-body">
