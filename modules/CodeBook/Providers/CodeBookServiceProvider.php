@@ -55,6 +55,7 @@ class CodeBookServiceProvider extends ServiceProvider
     {
         $this->publishes([
             __DIR__ . '/../config/config.php' => config_path('codebook.php'),
+            __DIR__ . '/../config/config.yml' => storage_path('app/books/template/config.yml'),
         ], 'config');
 
         $this->mergeConfigFrom(

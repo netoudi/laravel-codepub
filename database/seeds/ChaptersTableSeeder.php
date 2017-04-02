@@ -14,10 +14,13 @@ class ChaptersTableSeeder extends Seeder
         $books = \Modules\CodeBook\Models\Book::all();
 
         foreach ($books as $book) {
-            factory(\Modules\CodeBook\Models\Chapter::class, 5)->make()->each(function ($chapter) use ($book) {
+            $chapters = factory(\Modules\CodeBook\Models\Chapter::class, 5)->make();
+
+            foreach ($chapters as $key => $chapter) {
                 $chapter->book_id = $book->id;
+                $chapter->order = $key + 1;
                 $chapter->save();
-            });
+            }
         }
     }
 }

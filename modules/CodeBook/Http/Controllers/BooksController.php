@@ -9,6 +9,7 @@ use Modules\CodeBook\Http\Requests\BookCoverRequest;
 use Modules\CodeBook\Http\Requests\BookRequest;
 use Modules\CodeBook\Models\Book;
 use Modules\CodeBook\Pub\BookCoverUpload;
+use Modules\CodeBook\Pub\BookExport;
 use Modules\CodeBook\Repositories\BookRepository;
 use Modules\CodeBook\Repositories\CategoryRepository;
 use Modules\CodeUser\Annotations\Mapping as Permission;
@@ -168,5 +169,13 @@ class BooksController extends Controller
         $upload->upload($book, $request->file('file'));
 
         return redirect()->to($request->get('_previous'))->with('success', 'Cover adicionado com sucesso');
+    }
+
+    public function export(Book $book)
+    {
+        $bookExport = app(BookExport::class);
+        $bookExport->export($book);
+
+        return redirect()->route('books.index');
     }
 }

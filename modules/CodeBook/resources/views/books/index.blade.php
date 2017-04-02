@@ -49,6 +49,8 @@
                                         <td>{{ $book->user->name_trashed }}</td>
                                         <td>{{ $book->price }}</td>
                                         <td nowrap="nowrap">
+                                            <a href="{{ route('books.export', ['book' => $book->id]) }}"
+                                               class="btn btn-warning btn-xs">Exportar</a>
                                             @can('codebook-chapters/list')
                                                 <a href="{{ route('chapters.index', ['book' => $book->id]) }}"
                                                    class="btn btn-warning btn-xs">Capítulos</a>
