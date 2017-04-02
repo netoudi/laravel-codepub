@@ -175,7 +175,13 @@ class BooksController extends Controller
     {
         $bookExport = app(BookExport::class);
         $bookExport->export($book);
+        $bookExport->compress($book);
 
         return redirect()->route('books.index');
+    }
+
+    public function download(Book $book)
+    {
+        return response()->download($book->zip_file);
     }
 }

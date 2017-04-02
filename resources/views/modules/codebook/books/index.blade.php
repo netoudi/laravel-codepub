@@ -45,7 +45,14 @@
                                 @forelse($books as $book)
                                     <tr>
                                         <td>{{ $book->id }}</td>
-                                        <td>{{ str_limit($book->title, 50) }}</td>
+                                        @if(file_exists($book->zip_file))
+                                            <td>
+                                                <a href="{{ route('books.download', ['book' => $book->id]) }}"
+                                                   target="_blank">{{ str_limit($book->title, 50) }}</a>
+                                            </td>
+                                        @else
+                                            <td>{{ str_limit($book->title, 50) }}</td>
+                                        @endif
                                         <td>{{ $book->user->name_trashed }}</td>
                                         <td>{{ $book->price }}</td>
                                         <td nowrap="nowrap">

@@ -6,6 +6,7 @@ use Modules\CodeBook\Criteria\FindByBookCriteria;
 use Modules\CodeBook\Criteria\OrderByOrderCriteria;
 use Modules\CodeBook\Models\Book;
 use Modules\CodeBook\Repositories\ChapterRepository;
+use Modules\CodeBook\Util\ExtendedZip;
 use Symfony\Component\Yaml\Dumper;
 use Symfony\Component\Yaml\Parser;
 
@@ -71,6 +72,11 @@ class BookExport
         $yml = $this->ymlDumper->dump($config, 4);
 
         file_put_contents($book->config_file, $yml);
+    }
+
+    public function compress(Book $book)
+    {
+        ExtendedZip::zipTree($book->output_storage, $book->zip_file, ExtendedZip::CREATE);
     }
 
     protected function exportContents(Book $book, $chapters)
