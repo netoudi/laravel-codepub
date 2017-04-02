@@ -7,9 +7,9 @@ use Illuminate\Support\Facades\Auth;
 use Modules\CodeBook\Criteria\FindByAuthorCriteria;
 use Modules\CodeBook\Http\Requests\BookCoverRequest;
 use Modules\CodeBook\Http\Requests\BookRequest;
+use Modules\CodeBook\Jobs\GenerateBook;
 use Modules\CodeBook\Models\Book;
 use Modules\CodeBook\Pub\BookCoverUpload;
-use Modules\CodeBook\Pub\BookExport;
 use Modules\CodeBook\Repositories\BookRepository;
 use Modules\CodeBook\Repositories\CategoryRepository;
 use Modules\CodeUser\Annotations\Mapping as Permission;
@@ -171,11 +171,14 @@ class BooksController extends Controller
         return redirect()->to($request->get('_previous'))->with('success', 'Cover adicionado com sucesso');
     }
 
+    /**
+     * @Permission\Action(name="export", description="Exportar livro")
+     * @param Book $book
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function export(Book $book)
     {
-        $bookExport = app(BookExport::class);
-        $bookExport->export($book);
-        $bookExport->compress($book);
+        dispatch(new GenerateBook($book));
 
         return redirect()->route('books.index');
     }

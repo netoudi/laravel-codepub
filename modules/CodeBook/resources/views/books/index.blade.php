@@ -56,11 +56,13 @@
                                         <td>{{ $book->user->name_trashed }}</td>
                                         <td>{{ $book->price }}</td>
                                         <td nowrap="nowrap">
-                                            <a href="{{ route('books.export', ['book' => $book->id]) }}"
-                                               class="btn btn-warning btn-xs">Exportar</a>
+                                            @can('codebook-books/export')
+                                                <a href="{{ route('books.export', ['book' => $book->id]) }}"
+                                                   class="btn btn-warning btn-xs">Exportar</a>
+                                            @endcan
                                             @can('codebook-chapters/list')
                                                 <a href="{{ route('chapters.index', ['book' => $book->id]) }}"
-                                                   class="btn btn-warning btn-xs">Capítulos</a>
+                                                   class="btn btn-info btn-xs">Capítulos</a>
                                             @endcan
                                             @can('codebook-books/cover')
                                                 <a href="{{ route('books.cover.create', ['book' => $book->id]) }}"
